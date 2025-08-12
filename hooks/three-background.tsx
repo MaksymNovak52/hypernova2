@@ -20,9 +20,15 @@ export const useThreeJSBackground = ({
     const mount = mountRef.current;
     if (!mount) return;
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    const renderer = new THREE.WebGLRenderer({
+      antialias: true,
+      alpha: false,
+    });
+
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    renderer.setClearColor(0x0d0b0a, 1);
 
     renderer.domElement.style.position = "fixed";
     renderer.domElement.style.top = "0";
@@ -34,6 +40,9 @@ export const useThreeJSBackground = ({
     mount.appendChild(renderer.domElement);
 
     const scene = new THREE.Scene();
+
+    scene.background = new THREE.Color(0x000000);
+
     const camera = new THREE.PerspectiveCamera(
       75,
       window.innerWidth / window.innerHeight,
@@ -92,38 +101,3 @@ export const useThreeJSBackground = ({
     camera: cameraRef.current,
   };
 };
-
-const ThreeJSDemo = () => {
-  const { mountRef } = useThreeJSBackground({
-    onSceneCreated: (scene) => {
-      const geometry = new THREE.BoxGeometry();
-      const material = new THREE.MeshBasicMaterial({
-        color: 0x00ff00,
-        wireframe: true,
-      });
-      const cube = new THREE.Mesh(geometry, material);
-      scene.add(cube);
-    },
-    onAnimate: (elapsed) => {},
-  });
-
-  return (
-    <>
-      <div
-        ref={mountRef}
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          zIndex: -1,
-          margin: 0,
-          padding: 0,
-        }}
-      />
-    </>
-  );
-};
-
-export default ThreeJSDemo;

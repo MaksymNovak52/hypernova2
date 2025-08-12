@@ -15,7 +15,7 @@ export function UnderLineText({
   className = "",
   textColor = "text-white",
   lineColor = "bg-white",
-  lineHeight = "h-0.5",
+  lineHeight = "h-[1px]",
   animationDuration = "duration-300",
   onClick,
 }: AnimatedTextProps) {

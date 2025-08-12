@@ -4,7 +4,7 @@ import { PixelTrailWithOverlay } from "../ui/trail-ovetlay";
 
 export function HeaderContainer() {
   return (
-    <header className="absolute top-0 left-0 w-full flex items-center justify-center z-10 h-[57px] pt-10 z-10000">
+    <header className="absolute top-0 left-0 w-full flex items-center justify-center z-10 h-[57px] pt-[30px] z-10000">
       <section className="flex flex-row items-center justify-end sm:justify-between w-[1340px] py-2 rounded-full ">
         <video
           className="object-contain hidden sm:block"

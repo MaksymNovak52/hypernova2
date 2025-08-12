@@ -2,13 +2,13 @@
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 
-type Props = { width?: number; height?: number; left?: string; top?: number };
+type Props = { width?: number; height?: number; left?: string; top?: string };
 
 export function ASCIIGalaxy3D({
   width = 1200,
-  height = 900,
-  left = "left-1/2",
-  top = 0,
+  height = 1000,
+  left = "left-[40%]",
+  top = "top-[60%]",
 }: Props) {
   const mountRef = useRef<HTMLDivElement>(null);
   const [asciiWidth, setAsciiWidth] = useState(width);
@@ -313,9 +313,9 @@ export function ASCIIGalaxy3D({
       <div
         ref={mountRef}
         style={{ zIndex: -1 }}
-        className={`absolute top-[60%] ${left} -translate-x-1/2 -translate-y-1/2 z-0 rotate-[13deg]`}
+        className={`absolute  ${left}  ${top} -translate-x-1/2 -translate-y-1/2 z-0 rotate-[13deg]`}
       />
-      {/* <div className="fixed bottom-0 flex flex-col items-center">
+      <div className="fixed bottom-0 flex flex-col items-center">
         <div className="controls bg-gray-800 p-4 rounded-lg shadow-lg mt-4">
           <h3 className="text-white text-lg mb-4">Basic Adjustments</h3>
           <div className="mb-4">
@@ -381,7 +381,7 @@ export function ASCIIGalaxy3D({
             </label>
           </div>
         </div>
-      </div> */}
+      </div>
     </>
   );
 }

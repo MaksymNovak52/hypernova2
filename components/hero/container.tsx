@@ -1,4 +1,5 @@
 "use client";
+import { DotBadge } from "../ui";
 import { PixelTrailWithOverlay } from "../ui/trail-ovetlay";
 import { ASCIIGalaxy3D } from "./ascii-galaxy";
 import { HeroDescription } from "./description";
@@ -12,9 +13,14 @@ export function HeroContainer({
   onAsciiReady: () => void;
 }) {
   return (
-    <main className="relative z-10 rounded-xl flex  h-[85vh] overflow-hidden items-center justify-between text-start px-4 border border-[#252323] max-w-[1340px] text-[#B7B7B7] mx-auto mt-24">
+    <main
+      className="relative z-10 rounded-xl flex h-[85vh] overflow-hidden items-center justify-between text-start px-4 border border-[#252323] max-w-[1340px] text-[#B7B7B7] mx-auto mt-[90px]"
+      style={{
+        background: `lightgray, lightgray, linear-gradient(231deg, rgba(255, 255, 255, 0.00) 42.18%, rgba(255, 255, 255, 0.03) 75.58%)`,
+      }}
+    >
+      {" "}
       <SocialContainer />
-
       <HeroDescription />
       <div className="mb-10 animate-fade-in-up flex flex-col mx-auto justify-start h-full text-center pt-[50px] bg-re d-400">
         <div className="flex flex-row justify-center items-center gap-4 uppercase">
@@ -43,18 +49,22 @@ export function HeroContainer({
             textColor="#BBBBBA"
             borderStyle=" 1px solid #494848"
           />{" "}
-          <PixelTrailWithOverlay
-            borderStyle=" 1px solid #494848"
-            width={130}
-            height={36}
-            fontSize={14}
-            label="Launch App"
-            circleSize={8}
-            circleColor="#080605"
-            backgroundColor="white"
-            textColor="#080605"
-            onClick={onLaunch}
-          />{" "}
+          <div className="pb-2">
+            <DotBadge
+              borderStyle="none"
+              width={130}
+              height={36}
+              isHover
+              fontSize={14}
+              label="Launch App"
+              isShadow={true}
+              circleSize={8}
+              circleColor="#080605"
+              backgroundColor="white"
+              textColor="#080605"
+              onClick={onLaunch}
+            />{" "}
+          </div>
         </div>
       </div>
       <ASCIIGalaxy3D />
