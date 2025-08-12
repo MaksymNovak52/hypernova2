@@ -104,15 +104,7 @@ const ThreeJSDemo = () => {
       const cube = new THREE.Mesh(geometry, material);
       scene.add(cube);
     },
-    onAnimate: (elapsed) => {
-      const cube = sceneRef?.current?.children.find(
-        (child) => child instanceof THREE.Mesh
-      );
-      if (cube) {
-        cube.rotation.x = elapsed * 0.5;
-        cube.rotation.y = elapsed * 0.3;
-      }
-    },
+    onAnimate: (elapsed) => {},
   });
 
   return (

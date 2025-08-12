@@ -29,7 +29,7 @@ export function HeroContainer({
           </div>
           <span className="text-[12px]">COMING SOON</span>
         </div>
-        <h4 className="text-[40px] md:text-6xl font-mono font-normal mb-6 max-w-[550px]">
+        <h4 className="text-[40px] md:text-6xl font-mono mt-[28px] font-normal mb-6 max-w-[550px]">
           Your Gateway to Funded Trading
         </h4>
         <div className="flex flex-row justify-center items-center  gap-6  z-100">
@@ -57,7 +57,7 @@ export function HeroContainer({
           />{" "}
         </div>
       </div>
-      <ASCIIGalaxy3D onAsciiReady={onAsciiReady} />
+      <ASCIIGalaxy3D />
     </main>
   );
 }
