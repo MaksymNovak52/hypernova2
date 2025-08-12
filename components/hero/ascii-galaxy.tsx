@@ -315,7 +315,7 @@ export function ASCIIGalaxy3D({
         style={{ zIndex: -1 }}
         className={`absolute  ${left}  ${top} -translate-x-1/2 -translate-y-1/2 z-0 rotate-[13deg]`}
       />
-      <div className="fixed bottom-0 flex flex-col items-center">
+      {/* <div className="fixed bottom-0 flex flex-col items-center">
         <div className="controls bg-gray-800 p-4 rounded-lg shadow-lg mt-4">
           <h3 className="text-white text-lg mb-4">Basic Adjustments</h3>
           <div className="mb-4">
@@ -381,7 +381,7 @@ export function ASCIIGalaxy3D({
             </label>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }

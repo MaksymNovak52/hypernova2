@@ -3,8 +3,9 @@ import { PixelTrailWithOverlay } from "../ui/trail-ovetlay";
 export function SocialContainer() {
   return (
     <section className="absolute sm:bottom-[50px]  bottom-[10px] right-0 sm:right-10   w-full flex flex-col  items-center sm:items-end gap-6 0 sm:max-w-[301px]">
-      <div className="flex flex-row justify-center sm:justify-end items-center  gap-2 w-full  ">
+      <div className="flex flex-row justify-center sm:justify-end items-center  gap-2 w-full    ml-1  ">
         <PixelTrailWithOverlay
+          isShadow={false}
           width={70}
           height={32}
           fontSize={14}
@@ -30,6 +31,7 @@ export function SocialContainer() {
           borderStyle=" 1px solid #494848"
         />{" "}
         <PixelTrailWithOverlay
+          isShadow={false}
           borderStyle=" 1px solid #494848"
           width={70}
           height={32}
@@ -62,8 +64,8 @@ export function SocialContainer() {
           textColor="#BBBBBA"
         />{" "}
       </div>
-      <div className="sm:flex flex-row items-center text-center  gap-2 hidden ">
-        <span className="text-base text-[#BBBBBA] leading-[150%] ">
+      <div className="sm:flex flex-row items-center hidden text-center  gap-2  max-sm:absolute max-sm:bottom-[-80px] max-sm:left-1/2 transform max-sm:-translate-x-1/2 ">
+        <span className="text-base text-[#494848] leading-[150%] opacity-80 ">
           Built on
         </span>
         <svg

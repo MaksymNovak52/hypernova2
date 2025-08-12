@@ -149,10 +149,10 @@ export default function ModalContainer({
           <div className="flex-1 flex flex-col justify-center py-8 max-h-[80%] w-[310px]">
             <ModalHeader step={formState.step} />
 
-            <div className="flex flex-col justify-center items-center">
+            <div className="flex flex-col justify-center items-center ">
               {formState.step !== "access" && (
                 <label
-                  className={`${MODAL_CONFIG.colors.text.label} text-xs mb-3  bg--400 w-[310px]`}
+                  className={`${MODAL_CONFIG.colors.text.label} text-xs mb-3    flex flex-row justify-between w-[310px]`}
                 >
                   {formState.step === "email"
                     ? FORM_CONFIG.messages.labels.emailAddress
@@ -171,7 +171,7 @@ export default function ModalContainer({
           </div>
 
           <div className=" justify-end items-center pr-4  hidden sm:flex">
-            <div className="w-[470px] h-[600px] border border-[#252323] ">
+            <div className="w-[470px] h-[600px] rounded-[15px] border border-[#252323] ">
               <ASCIIGalaxy3D width={450} height={500} left="left-[70%]" />
             </div>
           </div>

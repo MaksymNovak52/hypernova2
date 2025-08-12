@@ -99,12 +99,12 @@ export function DotBadge({
 
         ...shadowStyle,
         border: borderStyle,
-        transition: "ease-in-out",
+        transition:
+          "box-shadow 0.3s ease-in-out, background-color 0.3s ease-in-out",
       }}
       onMouseEnter={(e) => {
         if (isHover) {
-          e.currentTarget.style.transition = "ease-in-out";
-
+          e.currentTarget.style.transition = "box-shadow 0.3s ease-in-out";
           e.currentTarget.style.boxShadow = `
             0 0 ${30 * intensity}px ${glowColor},
             0 0 ${60 * intensity}px ${glowColorLight},
@@ -114,7 +114,7 @@ export function DotBadge({
       }}
       onMouseLeave={(e) => {
         if (isHover) {
-          e.currentTarget.style.transition = "ease-in-out";
+          e.currentTarget.style.transition = "box-shadow 0.3s ease-in-out";
           e.currentTarget.style.boxShadow = isShadow
             ? `0 -3px 4px rgba(255, 255, 255, 0.1) inset, -5px -5px 250px rgba(255, 255, 255, 0.02) inset`
             : "none";

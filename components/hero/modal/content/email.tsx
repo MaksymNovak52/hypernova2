@@ -34,7 +34,7 @@ export function EmailContent({
             style={{
               background: "linear-gradient(107deg, #FFF 0%, #BBBBBA 100%)",
             }}
-            className={`w-[310px] text-black ${MODAL_CONFIG.colors.button.primary} h-[32px] flex items-center justify-center text-sm font-medium py-3 px-6 rounded-lg transition-all duration-300 ease-in-out hover:scale-10 hover:animate-glow`}
+            className={`w-[310px] text-black ${MODAL_CONFIG.colors.button.primary} h-[32px] flex items-center justify-center text-sm font-medium py-2 px-2 rounded-lg transition-all duration-300 ease-in-out hover:scale-10 hover:animate-glow`}
           >
             {FORM_CONFIG.buttons.continue}
           </button>

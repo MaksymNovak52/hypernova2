@@ -80,7 +80,32 @@ export default function HypernovaLandingPage() {
   }, [isModalOpen]);
 
   return (
-    <div className="relative w-full h-screen  overflow-hidden   text-white">
+    <div className="relative w-full h-screen  overflow-hidden   text-white ">
+      <div
+        className={`sm:hidden flex flex-row items-center  text-center  gap-2 z-100 fixed transform translate-x-1/2  z-[999]  bottom-2  backdrop-blur-3xl ${
+          isModalOpen && "opacity-5"
+        }`}
+      >
+        <span className="text-base text-[#494848] leading-[150%] opacity-80 ">
+          Built on
+        </span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="14"
+          height="10"
+          viewBox="0 0 14 10"
+          fill="none"
+        >
+          <path
+            d="M14 4.935C14 9.39317 11.17 10.8239 9.66922 9.55906C8.44717 8.52227 8.0827 6.32429 6.2389 6.0962C3.90199 5.82664 3.6876 8.83331 2.14395 8.83331C0.343032 8.83331 0 6.32429 0 5.01795C0 3.69087 0.385911 1.88686 1.90812 1.88686C3.6876 1.88686 3.79479 4.47882 6.0245 4.33367C8.23277 4.18852 8.27565 1.49288 9.73354 0.352416C10.9985 -0.663631 14 0.414623 14 4.935Z"
+            fill="#BBBBBA"
+          />
+        </svg>
+        <span className="text-base text-[#BBBBBA] leading-[150%] font-bold">
+          Hyperliquid
+        </span>
+      </div>
+
       {isLoading && <LoaderOverlay />}
       {isModalOpen && (
         <div
@@ -95,7 +120,7 @@ export default function HypernovaLandingPage() {
         }`}
       />
 
-      <HeaderContainer />
+      <HeaderContainer onLaunch={openModal} />
       <HeroContainer onAsciiReady={markStepLoaded} onLaunch={openModal} />
 
       {isModalOpen && (

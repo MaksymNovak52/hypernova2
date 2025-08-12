@@ -28,8 +28,8 @@ export const ModalHeader: React.FC<{
   }
 
   return (
-    <div className="mb-[20px] flex flex-col items-center justify-center w-[310px] mx-auto bg-r ed-400">
-      <div className={`${step === "email" && "absolute top-[-70px]"}`}>
+    <div className="mb-[40px] flex flex-col items-center justify-center w-[310px] mx-auto ">
+      <div className={`${step === "email" && "absolute top-[-90px]"}`}>
         {icon}
       </div>
       <div

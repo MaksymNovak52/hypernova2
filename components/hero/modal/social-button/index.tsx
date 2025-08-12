@@ -7,6 +7,7 @@ const SocialButton: React.FC<{
   <button
     onClick={() => onClick(provider.id)}
     className={`flex-1 ${MODAL_CONFIG.colors.button.social} w-[71.5px] h-[32px] border rounded-lg transition-all duration-200 transform hover:scale-105 hover:shadow-lg flex items-center justify-center`}
+    style={{ background: "rgba(255, 255, 255, 0.05)" }}
   >
     {provider.icon}
   </button>
