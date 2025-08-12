@@ -1,5 +1,5 @@
+import ClickSpark from "@/components/ui/click-spark";
 import { FORM_CONFIG, MODAL_CONFIG } from "@/constanst";
-import { ClickSpark } from "@appletosolutions/reactbits";
 import { Divider } from "../divider";
 import { EmailInput } from "../inputs";
 import { SocialLogin } from "../social-button";
