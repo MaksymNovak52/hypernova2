@@ -2,11 +2,16 @@ import React from "react";
 
 type StatusButtonProps = {
   status: "Connected" | "Connect";
+  onClick?: () => void;
 };
 
-export const StatusButton: React.FC<StatusButtonProps> = ({ status }) => (
+export const StatusButton: React.FC<StatusButtonProps> = ({
+  status,
+  onClick,
+}) => (
   <span
-    className={`gap-2 border  border-[#BBBBBA] text-xs w-[85px] h-[26px] cursor-pointer rounded-lg flex items-center justify-center transition-all transform hover:scale-105 ease-in-out ${
+    onClick={onClick}
+    className={`gap-2 border border-[#BBBBBA] text-xs w-[85px] h-[26px] cursor-pointer rounded-lg flex items-center justify-center transition-all transform hover:scale-105 ease-in-out ${
       status === "Connected"
         ? "bg-gradient-to-r from-[#FFF] to-[#BBBBBA] text-[#080605]"
         : "bg-[rgba(255,255,255,0.05)] text-[#BBBBBA]"

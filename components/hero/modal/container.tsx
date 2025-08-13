@@ -155,8 +155,8 @@ export default function ModalContainer({
           easing="ease-out"
           extraScale={1.2}
         >
-          <div className="flex h-full justify-center gap-10 items-center">
-            <div className="flex-1 flex flex-col justify-center py-8 max-h-[80%] w-[310px]">
+          <div className="flex h-full justify-center gap-10 items-center ">
+            <div className="flex-1 flex flex-col justify-center py-8 max-h-[80%] w-[310px] relative">
               <ModalHeader step={formState.step} />
 
               <div className="flex flex-col justify-center items-center ">
@@ -177,10 +177,10 @@ export default function ModalContainer({
                 {renderStepContent()}
               </div>
 
-              <Footer />
+              <Footer step={formState.step} />
             </div>
 
-            <div className=" justify-end items-center pr-4  hidden sm:flex">
+            <div className=" justify-end items-center pr-4  hidden sm:flex ">
               <div
                 className="w-[470px] h-[600px] rounded-[15px] border border-[#252323] "
                 style={{

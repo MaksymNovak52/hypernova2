@@ -44,10 +44,10 @@ export function HeroContainer({
       >
         {" "}
         <div className="box w-full h-full absolute "></div>
-        <div className=" px-4 flex  h-[85vh] overflow-hidden items-center justify-between text-start  max-w-[1340px] text-[#B7B7B7] mx-auto ">
+        <div className=" px-4 flex max-h-[600px]  sm:h-[85vh] overflow-hidden items-center justify-between text-start  max-w-[1340px] text-[#B7B7B7] mx-auto ">
           <SocialContainer />
           <HeroDescription />
-          <div className="mb-10 animate-fade-in-up flex flex-col mx-auto justify-start h-full text-center pt-[65px] ">
+          <div className="mb-10 animate-fade-in-up flex flex-col mx-auto justify-start h-full text-center pt-[30px] sm:pt-[65px] ">
             <div className="flex flex-row justify-center items-center gap-4 uppercase">
               <span className="text-[12px]">early access</span>
               <div className="flex flex-row gap-2 items-center">

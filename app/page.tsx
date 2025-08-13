@@ -87,9 +87,29 @@ export default function HypernovaLandingPage() {
       easing="ease-out"
       extraScale={1.2}
     >
-      <div className="relative w-full h-screen overflow-hidden text-white bg-black">
+      <div className="relative w-full  h-screen overflow-hidden text-white bg-black">
+        {isLoading && <LoaderOverlay />}
+        {isModalOpen && (
+          <div
+            className="fixed inset-0 bg-black bg-opacity-80 backdrop-blur-sm z-40 transition-all duration-300"
+            onClick={closeModal}
+          />
+        )}
         <div
-          className={`sm:hidden flex flex-row items-center w-[200px] text-center gap-2 fixed left-1/2 -translate-x-1/2 bottom-4 backdrop-blur-3xl z-[999] ${
+          ref={mountRef}
+          className={`absolute inset-0 z-10 transition-opacity duration-300 ${
+            isModalOpen ? "opacity-30" : "opacity-100"
+          }`}
+        />
+
+        <HeaderContainer onLaunch={openModal} />
+        <HeroContainer onAsciiReady={markStepLoaded} onLaunch={openModal} />
+
+        {isModalOpen && (
+          <ModalContainer isOpen={isModalOpen} closeModal={closeModal} />
+        )}
+        <div
+          className={`sm:hidden flex flex-row items-center w-[200px]   text-center gap-2 relative pt-2 left-1/2 -translate-x-1/2  backdrop-blur-3xl z-[999] ${
             isModalOpen && "opacity-5"
           }`}
         >
@@ -112,27 +132,6 @@ export default function HypernovaLandingPage() {
             Hyperliquid
           </span>
         </div>
-
-        {isLoading && <LoaderOverlay />}
-        {isModalOpen && (
-          <div
-            className="fixed inset-0 bg-black bg-opacity-80 backdrop-blur-sm z-40 transition-all duration-300"
-            onClick={closeModal}
-          />
-        )}
-        <div
-          ref={mountRef}
-          className={`absolute inset-0 z-10 transition-opacity duration-300 ${
-            isModalOpen ? "opacity-30" : "opacity-100"
-          }`}
-        />
-
-        <HeaderContainer onLaunch={openModal} />
-        <HeroContainer onAsciiReady={markStepLoaded} onLaunch={openModal} />
-
-        {isModalOpen && (
-          <ModalContainer isOpen={isModalOpen} closeModal={closeModal} />
-        )}
       </div>
     </ClickSpark>
   );

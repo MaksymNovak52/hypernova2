@@ -1,7 +1,11 @@
 import Users from "@/assets/users.png";
 import Image from "next/image";
-export const Footer: React.FC = () => (
-  <div className="flex flex-row  items-center gap-2  w-[213px] h-[24px] mx-auto mt-10">
+export const Footer = ({ step }: { step: "email" | "username" | "access" }) => (
+  <div
+    className={`flex flex-row  absolute  ${
+      step === "access" ? "-bottom-[50px]" : " -bottom-[100px]"
+    }  left-1/2 transform -translate-x-1/2 items-center gap-2  w-[213px] h-[24px] mx-auto pt-10`}
+  >
     <div className="">
       <Image src={Users} alt="users" />
     </div>
