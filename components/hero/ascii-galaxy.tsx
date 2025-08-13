@@ -27,7 +27,6 @@ export function ASCIIGalaxy3D({
       (window.innerWidth < 768 ||
         /Android|iPhone|iPad|iPod/i.test(navigator.userAgent));
 
-    // компактні розміри для мобільних
     const W = width;
     const H = height;
     container.style.width = `${W}px`;
@@ -77,7 +76,6 @@ export function ASCIIGalaxy3D({
     );
     (activeCamera as THREE.PerspectiveCamera).position.set(0, 0, 6);
 
-    // Lights (спрощуємо на мобільних)
     const ambient = new THREE.AmbientLight(0xffffff, isMobile ? 0.6 : 0.1);
     scene.add(ambient);
 
@@ -104,11 +102,9 @@ export function ASCIIGalaxy3D({
       scene.add(key, rim, fill, spot, spot.target);
     }
 
-    // Root group
     const root = new THREE.Group();
     scene.add(root);
 
-    // Ground (лише на десктопі для тіней)
     let ground: THREE.Mesh | null = null;
     if (!isMobile) {
       ground = new THREE.Mesh(
@@ -121,23 +117,18 @@ export function ASCIIGalaxy3D({
       scene.add(ground);
     }
 
-    // Canvas для зчитування
     const grab = document.createElement("canvas");
     grab.width = W;
     grab.height = H;
     const g2d = grab.getContext("2d", { willReadFrequently: true })!;
 
-    // попередні обчислення контрасту
     const contrastFactor = (259 * (contrast + 255)) / (255 * (259 - contrast));
-    // більші кроки на мобільних (менше семплів → швидше)
     const sx = isMobile ? 6 : 4;
     const sy = isMobile ? 12 : 8;
 
-    // частота ASCII (нижча на мобільних)
     const asciiFps = isMobile ? 11 : 20;
     const asciiInterval = 1000 / asciiFps;
 
-    // гаму/інші константи лишаємо
     const gamma = 1.0,
       k = 10.5,
       lift = -0.015,
@@ -153,13 +144,10 @@ export function ASCIIGalaxy3D({
       );
     const charLen = chars.length - 1;
 
-    // конвертер у ASCII (оптимізований)
     const toASCII = (img: ImageData, w: number, h: number) => {
-      // збираємо рядок через масив — менше навантаження на GC
       const lines: string[] = [];
       let outLine: string[] = [];
 
-      // легкий блюр лише якщо треба
       if (blur > 0) {
         g2d.filter = `blur(${blur}px)`;
         g2d.drawImage(renderer.domElement, 0, 0, w, h);
@@ -224,7 +212,6 @@ export function ASCIIGalaxy3D({
     const clamp = (value: number, min: number, max: number) =>
       Math.max(min, Math.min(max, value));
 
-    // Завантаження моделі
     let loaded = false;
     (async () => {
       try {
@@ -261,13 +248,11 @@ export function ASCIIGalaxy3D({
               m.castShadow = !isMobile && true;
               m.receiveShadow = false;
               const prev = (m.material as THREE.Material) || undefined;
-              // легкий матеріал
               m.material = new THREE.MeshLambertMaterial({ color: 0xffffff });
               (prev as any)?.dispose?.();
             }
           });
 
-          // нормалізація сценки
           const box = new THREE.Box3().setFromObject(gltf.scene);
           const size = box.getSize(new THREE.Vector3());
           const maxDim = Math.max(size.x, size.y, size.z) || 1;
@@ -300,14 +285,12 @@ export function ASCIIGalaxy3D({
       }
     })();
 
-    // Анімація: throttling + пауза якщо невидимо
     let lastAsciiTime = 0;
     let running = true;
 
     const tick = (time: number) => {
       if (!running) return;
 
-      // помірні оберти (менше перерахунків)
       root.rotation.y += isMobile ? 0.004 : 0.007;
       root.rotation.x += isMobile ? 0.0015 : 0.0025;
 
@@ -332,7 +315,6 @@ export function ASCIIGalaxy3D({
     };
     document.addEventListener("visibilitychange", onVisibility);
 
-    // пауза коли елемент не в viewport
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
@@ -385,7 +367,7 @@ export function ASCIIGalaxy3D({
       renderer.dispose();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [width, height, asciiWidth]); // не прив'язуємось до brightness/contrast/blur/invert щоб не перевлаштовувати сцену
+  }, [width, height, asciiWidth]);
 
   return (
     <div
