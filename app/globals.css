@@ -68,3 +68,19 @@ body {
 .hover\:animate-glow:hover {
   animation: glow 2s ease-in-out infinite;
 }
+
+@keyframes glowHero {
+  0% {
+    box-shadow: 0 0 3px #bbbbba, 0 0 7px #bbbbba, 0 0 10px #bbbbba;
+  }
+  50% {
+    box-shadow: 0 0 8px #bbbbba, 0 0 12px #bbbbba, 0 0 25px #bbbbba;
+  }
+  100% {
+    box-shadow: 0 0 3px #bbbbba, 0 0 6px #bbbbba, 0 0 10px #bbbbba;
+  }
+}
+
+.hover\:animate-glow-hero:hover {
+  animation: glowHero 2s ease-in-out infinite;
+}

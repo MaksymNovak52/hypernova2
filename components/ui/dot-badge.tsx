@@ -32,15 +32,8 @@ export function DotBadge({
   lineHeight = "100%",
   borderStyle = "1px solid black",
   isHover = false,
-  glowIntensity = 50,
+  glowIntensity = 100,
 }: DotBadgeProps) {
-  const shadowStyle = isShadow
-    ? {
-        boxShadow: `0 -3px 4px rgba(255, 255, 255, 0.1) inset, -5px -5px 250px rgba(255, 255, 255, 0.02) inset`,
-        backdropFilter: "blur(23.8px)",
-      }
-    : {};
-
   const getRgbaFromColor = (color: string, alpha: number = 1) => {
     if (color.startsWith("#")) {
       const hex = color.slice(1);
@@ -49,19 +42,14 @@ export function DotBadge({
       const b = parseInt(hex.slice(4, 6), 16);
       return `rgba(${r}, ${g}, ${b}, ${alpha})`;
     }
-
     if (color.startsWith("rgb(")) {
       return color.replace("rgb(", "rgba(").replace(")", `, ${alpha})`);
     }
+    if (color.startsWith("rgba(")) return color;
 
-    if (color.startsWith("rgba(")) {
-      return color;
-    }
-
-    const namedColors: { [key: string]: string } = {
+    const named: Record<string, string> = {
       white: "255, 255, 255",
       black: "0, 0, 0",
-      red: "255, 0, 0",
       green: "0, 128, 0",
       blue: "0, 0, 255",
       yellow: "255, 255, 0",
@@ -71,71 +59,78 @@ export function DotBadge({
       gray: "128, 128, 128",
       grey: "128, 128, 128",
     };
-
-    const colorValues = namedColors[color.toLowerCase()] || "255, 255, 255";
-    return `rgba(${colorValues}, ${alpha})`;
+    const v = named[color.toLowerCase()] || "255, 255, 255";
+    return `rgba(${v}, ${alpha})`;
   };
 
-  const glowColor = getRgbaFromColor(backgroundColor, 0.8);
-  const glowColorLight = getRgbaFromColor(backgroundColor, 0.4);
+  const extractFirstStop = (bg: string) => {
+    if (!bg.startsWith("linear-gradient") && !bg.startsWith("radial-gradient"))
+      return bg;
+    const m = bg.match(/gradient\([^,]+,\s*([^,\)]+)/i);
+    return "white";
+  };
 
+  const isGradient =
+    typeof backgroundColor === "string" &&
+    (backgroundColor.startsWith("linear-gradient") ||
+      backgroundColor.startsWith("radial-gradient"));
+
+  const glowBase = extractFirstStop(backgroundColor);
   const intensity = Math.min(Math.max(glowIntensity, 0), 100) / 100;
+  const glowColor = getRgbaFromColor(glowBase, 0.8);
+  const glowColorLight = getRgbaFromColor(glowBase, 0.35);
+
+  const baseInset = isShadow
+    ? "0 -3px 4px rgba(255, 255, 255, 0.1) inset, -5px -5px 250px rgba(255, 255, 255, 0.02) inset"
+    : "none";
 
   return (
     <button
       onClick={onClick}
       className={clsx(
-        "rounded-[12px] border flex items-center gap-2 justify-center transition-all duration-300 ease-out",
-        {
-          "hover:shadow-2xl": isHover,
-        }
+        "relative group rounded-[12px] border flex items-center gap-2 justify-center",
+        "transition-[box-shadow,transform,background-color,background] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]",
+        isHover && "hover:animate-glow-hero"
       )}
       style={{
-        backgroundColor,
+        ...(isGradient ? { background: backgroundColor } : { backgroundColor }),
         color: textColor,
         width,
         height,
         fontSize,
-
-        ...shadowStyle,
+        lineHeight,
         border: borderStyle,
-        transition:
-          "box-shadow 0.3s ease-in-out, background-color 0.3s ease-in-out",
-      }}
-      onMouseEnter={(e) => {
-        if (isHover) {
-          e.currentTarget.style.transition = "box-shadow 0.3s ease-in-out";
-          e.currentTarget.style.boxShadow = `
-            0 0 ${30 * intensity}px ${glowColor},
-            0 0 ${60 * intensity}px ${glowColorLight},
-            0 0 ${100 * intensity}px ${getRgbaFromColor(backgroundColor, 0.2)}
-          `;
-        }
-      }}
-      onMouseLeave={(e) => {
-        if (isHover) {
-          e.currentTarget.style.transition = "box-shadow 0.3s ease-in-out";
-          e.currentTarget.style.boxShadow = isShadow
-            ? `0 -3px 4px rgba(255, 255, 255, 0.1) inset, -5px -5px 250px rgba(255, 255, 255, 0.02) inset`
-            : "none";
-        }
+        boxShadow: baseInset,
+        willChange: "transform, box-shadow",
       }}
     >
+      {isHover && (
+        <div
+          aria-hidden
+          className={clsx(
+            "pointer-events-none absolute -inset-2 -z-10 rounded-[14px]",
+            "opacity-0 scale-95 blur-md",
+            "transition-[opacity,transform,filter] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
+            "group-hover:opacity-100 group-hover:scale-105"
+          )}
+          style={{
+            background: `radial-gradient(60% 60% at 50% 50%, ${glowColor} 0%, ${glowColorLight} 35%, rgba(0,0,0,0) 70%)`,
+            filter: `drop-shadow(0 0 ${40 * intensity}px ${glowColorLight})`,
+          }}
+        />
+      )}
+
       <span
         style={{
           width: circleSize,
           height: circleSize,
           backgroundColor: circleColor,
           borderRadius: "9999px",
-          lineHeight: lineHeight,
+          lineHeight,
+          flex: "0 0 auto",
         }}
       />
-      <span
-        className={`flex items-center justify-center ${
-          typeof label !== "string" && "mr-2 "
-        }`}
-      >
-        {" "}
+      <span className={typeof label !== "string" ? "mr-2" : undefined}>
         {label}
       </span>
     </button>

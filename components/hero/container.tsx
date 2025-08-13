@@ -42,7 +42,7 @@ export function HeroContainer({
         <div className=" px-4 flex  h-[85vh] overflow-hidden items-center justify-between text-start  max-w-[1340px] text-[#B7B7B7] mx-auto ">
           <SocialContainer />
           <HeroDescription />
-          <div className="mb-10 animate-fade-in-up flex flex-col mx-auto justify-start h-full text-center pt-[50px] ">
+          <div className="mb-10 animate-fade-in-up flex flex-col mx-auto justify-start h-full text-center pt-[65px] ">
             <div className="flex flex-row justify-center items-center gap-4 uppercase">
               <span className="text-[12px]">early access</span>
               <div className="flex flex-row gap-2 items-center">
@@ -55,7 +55,12 @@ export function HeroContainer({
               </div>
               <span className="text-[12px]">COMING SOON</span>
             </div>
-            <h4 className="text-[34px] md:text-6xl font-mono mt-[28px] font-normal mb-6 max-w-[550px]">
+            <h4
+              className="text-[34px] md:text-6xl font-mono mt-[28px] font-normal mb-6 max-w-[550px]"
+              style={{
+                color: "rgba(228 228 228 / 100%)",
+              }}
+            >
               Your Gateway to Funded Trading
             </h4>
             <div className="flex flex-row justify-center items-center  gap-6  z-100">
@@ -81,7 +86,7 @@ export function HeroContainer({
                   isShadow={true}
                   circleSize={8}
                   circleColor="#080605"
-                  backgroundColor="white"
+                  backgroundColor="linear-gradient(107deg, #FFF 10%, #BBBBBA 100%)"
                   textColor="#080605"
                   onClick={onLaunch}
                 />{" "}

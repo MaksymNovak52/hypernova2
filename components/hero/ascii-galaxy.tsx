@@ -8,7 +8,7 @@ export function ASCIIGalaxy3D({
   width = 1200,
   height = 1000,
   left = "left-[40%]",
-  top = "top-[60%]",
+  top = "top-[65%]",
 }: Props) {
   const mountRef = useRef<HTMLDivElement>(null);
   const [asciiWidth, setAsciiWidth] = useState(width);
