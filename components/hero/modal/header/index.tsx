@@ -36,7 +36,9 @@ export const ModalHeader: React.FC<{
       <div
         className={`flex flex-col items-center text-center  ${
           step === "access" && "w-[300px]"
-        }`}
+        }
+      
+        `}
       >
         <h1
           className={`${MODAL_CONFIG.colors.text.primary} text-[26px] font-light mb-1 line-clamp-2`}
@@ -44,7 +46,9 @@ export const ModalHeader: React.FC<{
           {title}
         </h1>
         <p
-          className={`${MODAL_CONFIG.colors.text.secondary} text-[14px] text-center`}
+          className={`${MODAL_CONFIG.colors.text.secondary}   ${
+            step === "username" && "w-[280px]"
+          } text-[14px] text-center`}
         >
           {subtitle}
         </p>
