@@ -3,7 +3,7 @@ import { FORM_CONFIG, MODAL_CONFIG } from "@/constanst";
 import { useFormValidation } from "@/hooks";
 import { FormState, ModalContainerProps } from "@/interface";
 import React, { useState } from "react";
-import { ASCIIGalaxy3D } from "../ascii-galaxy";
+import { AsciiCanvas } from "../new-ascii";
 import { EmailContent, PriorityAccess, UserContainer } from "./content";
 import { Footer, ModalHeader } from "./index";
 
@@ -139,7 +139,7 @@ export default function ModalContainer({
       onClick={closeModal}
     >
       <div
-        className={`relative backdrop-blur-md rounded-2xl shadow-2xl border border-[#4A4A49] w-full h-[650px] max-w-5xl  ${MODAL_CONFIG.animations.transition} scale-100`}
+        className={`relative backdrop-blur-md rounded-2xl overflow-hidden shadow-2xl border border-[#4A4A49] w-full h-[650px] max-w-5xl  ${MODAL_CONFIG.animations.transition} scale-100`}
         onClick={modalClickHandler}
         style={{
           backgroundColor: MODAL_CONFIG.colors.background,
@@ -180,9 +180,9 @@ export default function ModalContainer({
               <Footer step={formState.step} />
             </div>
 
-            <div className=" justify-end items-center pr-4  hidden sm:flex ">
+            <div className=" justify-end items-center pr-4  hidden sm:flex overflow-hidden ">
               <div
-                className="w-[470px] h-[600px] rounded-[15px] border border-[#252323] "
+                className="w-[470px] h-[600px] rounded-[15px] border border-[#252323] overflow-hidden  "
                 style={{
                   backgroundColor: "rgb(18, 17, 17,0.2)",
 
@@ -190,7 +190,15 @@ export default function ModalContainer({
                     "rgb(18, 17, 17,0.2) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset",
                 }}
               >
-                <ASCIIGalaxy3D width={450} height={500} left="left-[70%]" />
+                <AsciiCanvas
+                  scale={16}
+                  position={{ x: 8, y: 3, z: 1 }}
+                  rotation={{ x: 0.6, y: 0.1, z: -0.4 }}
+                  pivotRotation={{ x: -0.05, y: 0, z: 0 }}
+                  rotationSpeed={0.01}
+                  cellSize={5.0}
+                  onReady={() => console.log("Fully configured scene ready!")}
+                />
               </div>
             </div>
           </div>
