@@ -10,7 +10,7 @@ export const EmailInput: React.FC<{
 }> = ({ formState, onEmailChange, onFocus, onBlur }) => {
   const inputStyles = useMemo(() => {
     const baseStyles =
-      "w-[310px] h-[32px] px-[10px] py-[10px] bg-transparent rounded-lg text-[12px] text-white placeholder-gray-500 focus:outline-none transition-all duration-200";
+      "w-[310px] sm:h-[32px]  h-[40px] px-[10px] py-[10px] bg-transparent rounded-lg text-[12px] text-white placeholder-gray-500 focus:outline-none transition-all duration-200";
     const errorStyles = "border-2 border-[#AC3A3A]";
     const normalStyles =
       "border border-gray-600 hover:border-gray-400 focus:border-white";

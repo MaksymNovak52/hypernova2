@@ -19,7 +19,9 @@ export function HeaderContainer({ onLaunch }: { onLaunch: () => void }) {
           <LogoLottie size={400} />
         </div>{" "}
         <div className="flex items-center space-x-6 pr-4 sm:pr-0">
-          <UnderLineText className="text-base">About Us</UnderLineText>
+          <UnderLineText className="text-[14px] sm:text-base">
+            About Us
+          </UnderLineText>
 
           <div className="pb-2">
             <DotBadge

@@ -177,7 +177,7 @@ export default function ModalContainer({
                 {renderStepContent()}
               </div>
 
-              {formState.step === "email" && <Footer />}
+              <Footer />
             </div>
 
             <div className=" justify-end items-center pr-4  hidden sm:flex">

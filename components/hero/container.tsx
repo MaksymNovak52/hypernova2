@@ -1,4 +1,5 @@
 "use client";
+import { useIsMobile } from "@/hooks";
 import { DotBadge } from "../ui";
 import { PixelTrailWithOverlay } from "../ui/trail-ovetlay";
 import { ASCIIGalaxy3D } from "./ascii-galaxy";
@@ -12,6 +13,10 @@ export function HeroContainer({
   onLaunch: () => void;
   onAsciiReady: () => void;
 }) {
+  const isMobile = useIsMobile(800);
+
+  const sceneWidth = isMobile ? 450 : 1200;
+  const sceneHeight = isMobile ? 500 : 1000;
   return (
     <>
       <style jsx>
@@ -34,7 +39,7 @@ export function HeroContainer({
       </style>
 
       <main
-        className="relative z-10 rounded-xl h-[85vh] bg-[#494848]/10 overflow-hidden items-center justify-between text-start  max-w-[343px] sm:max-w-[96%] text-[#B7B7B7] mx-auto mt-[90px]  "
+        className="relative z-10 rounded-xl h-[85vh] bg-transparent sm:bg-[#494848]/10 overflow-hidden items-center justify-between text-start  max-w-[343px] sm:max-w-[96%] text-[#B7B7B7] mx-auto mt-[72px] sm:mt-[90px]  "
         style={{}}
       >
         {" "}
@@ -56,7 +61,7 @@ export function HeroContainer({
               <span className="text-[12px]">COMING SOON</span>
             </div>
             <h4
-              className="text-[34px] md:text-6xl font-mono mt-[28px] font-normal mb-6 max-w-[550px]"
+              className="text-[34px] md:text-6xl font-mono mt-[28px] font-normal mb-6 max-w-[550px] line-clamp-2"
               style={{
                 color: "rgba(228 228 228 / 100%)",
               }}
@@ -93,7 +98,11 @@ export function HeroContainer({
               </div>
             </div>
           </div>
-          <ASCIIGalaxy3D />
+          <ASCIIGalaxy3D
+            width={sceneWidth}
+            height={sceneHeight}
+            top=" top-[50%] sm:top-[65%]"
+          />
         </div>
       </main>
     </>

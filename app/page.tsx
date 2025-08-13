@@ -89,11 +89,11 @@ export default function HypernovaLandingPage() {
     >
       <div className="relative w-full h-screen overflow-hidden text-white bg-black">
         <div
-          className={`sm:hidden flex flex-row items-center text-center gap-2 z-100 fixed transform translate-x-1/2 z-[999] bottom-2 backdrop-blur-3xl ${
+          className={`sm:hidden flex flex-row items-center w-[200px] text-center gap-2 fixed left-1/2 -translate-x-1/2 bottom-4 backdrop-blur-3xl z-[999] ${
             isModalOpen && "opacity-5"
           }`}
         >
-          <span className="text-base text-[#494848] leading-[150%] ">
+          <span className="text-base text-[#494848] leading-[150%]">
             Built on
           </span>
           <svg
