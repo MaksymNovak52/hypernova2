@@ -1,6 +1,6 @@
 "use client";
 import AsciiScene from "@/helper/script-class";
-import { memo, useEffect, useId, useRef } from "react";
+import { memo, useEffect, useId, useMemo, useRef } from "react";
 
 type Props = {
   className?: string;
@@ -30,6 +30,34 @@ function AsciiCanvasComponent({
   const sceneRef = useRef<AsciiScene | null>(null);
   const portalContainerRef = useRef<HTMLDivElement | null>(null);
 
+  // Memoize object props to prevent unnecessary re-renders
+  const memoizedPosition = useMemo(
+    () => position,
+    [position?.x, position?.y, position?.z]
+  );
+
+  const memoizedRotation = useMemo(
+    () => rotation,
+    [rotation?.x, rotation?.y, rotation?.z]
+  );
+
+  const memoizedPivotRotation = useMemo(
+    () => pivotRotation,
+    [pivotRotation?.x, pivotRotation?.y, pivotRotation?.z]
+  );
+
+  // Memoize the callback to prevent re-renders
+  const memoizedCallback = useMemo(() => {
+    return () => {
+      onReady?.();
+      // @ts-ignore
+      if (sceneRef.current?.asciiPass) {
+        // @ts-ignore
+        sceneRef.current.asciiPass.uniforms.cellSize.value = cellSize;
+      }
+    };
+  }, [onReady, cellSize]);
+
   useEffect(() => {
     let actualContainerId = containerId;
 
@@ -43,18 +71,11 @@ function AsciiCanvasComponent({
     }
 
     const scene = new AsciiScene(actualContainerId, {
-      callback: () => {
-        onReady?.();
-        // @ts-ignore
-        if (scene.asciiPass) {
-          // @ts-ignore
-          scene.asciiPass.uniforms.cellSize.value = cellSize;
-        }
-      },
+      callback: memoizedCallback,
       scale,
-      position,
-      rotation,
-      pivotRotation,
+      position: memoizedPosition,
+      rotation: memoizedRotation,
+      pivotRotation: memoizedPivotRotation,
       rotationSpeed,
     });
 
@@ -81,13 +102,12 @@ function AsciiCanvasComponent({
     };
   }, [
     containerId,
-    onReady,
+    memoizedCallback,
     scale,
-    position,
-    rotation,
-    pivotRotation,
+    memoizedPosition,
+    memoizedRotation,
+    memoizedPivotRotation,
     rotationSpeed,
-    cellSize,
     usePortal,
     className,
   ]);

@@ -1,8 +1,8 @@
 import ClickSpark from "@/components/ui/click-spark";
 import { FORM_CONFIG, MODAL_CONFIG } from "@/constanst";
-import { useFormValidation } from "@/hooks";
+import { useFormValidation, useIsMobile } from "@/hooks";
 import { FormState, ModalContainerProps } from "@/interface";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { AsciiCanvas } from "../new-ascii";
 import { EmailContent, PriorityAccess, UserContainer } from "./content";
 import { Footer, ModalHeader } from "./index";
@@ -20,6 +20,19 @@ export default function ModalContainer({
   });
 
   const { validateEmail, validateUsername } = useFormValidation();
+  const isPhone = useIsMobile(800);
+  const asciiConfig = useMemo(
+    () => ({
+      scale: 12,
+      position: { x: -49, y: 3, z: 1 },
+      rotation: { x: -1, y: 0.1, z: -4.87 },
+      pivotRotation: { x: -0.05, y: 0, z: 1 },
+      rotationSpeed: 0.01,
+      cellSize: 5.0,
+      onReady: () => console.log("Fully configured scene ready!"),
+    }),
+    []
+  );
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -133,6 +146,12 @@ export default function ModalContainer({
     e.stopPropagation();
   };
 
+  // Determine if ASCII should be hidden based on input activity
+  const shouldHideAscii =
+    formState.isFocused ||
+    (formState.step !== "access" &&
+      (formState.email.length > 0 || formState.username.length > 0));
+
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
@@ -182,23 +201,24 @@ export default function ModalContainer({
 
             <div className=" justify-end items-center pr-4  hidden sm:flex overflow-hidden ">
               <div
-                className="w-[470px] h-[600px] rounded-[15px] border border-[#252323] overflow-hidden  "
+                className="w-[470px] h-[600px] rounded-[15px] border border-[#252323] overflow-hidden relative"
                 style={{
                   backgroundColor: "rgb(18, 17, 17,0.2)",
-
                   boxShadow:
                     "rgb(18, 17, 17,0.2) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset",
                 }}
               >
-                <AsciiCanvas
-                  scale={16}
-                  position={{ x: 8, y: 3, z: 1 }}
-                  rotation={{ x: 0.6, y: 0.1, z: -0.4 }}
-                  pivotRotation={{ x: -0.05, y: 0, z: 0 }}
-                  rotationSpeed={0.01}
-                  cellSize={5.0}
-                  onReady={() => console.log("Fully configured scene ready!")}
-                />
+                {!isPhone && (
+                  <AsciiCanvas
+                    scale={asciiConfig.scale}
+                    position={asciiConfig.position}
+                    rotation={asciiConfig.rotation}
+                    pivotRotation={asciiConfig.pivotRotation}
+                    rotationSpeed={asciiConfig.rotationSpeed}
+                    cellSize={asciiConfig.cellSize}
+                    onReady={asciiConfig.onReady}
+                  />
+                )}
               </div>
             </div>
           </div>
