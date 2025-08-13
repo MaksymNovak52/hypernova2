@@ -1,4 +1,3 @@
-import ClickSpark from "../click-spark";
 import { DotBadge } from "../dot-badge";
 import StarBorder from "../star-btn";
 
@@ -35,29 +34,21 @@ export function PixelTrailWithOverlay({
         color={starBorderColor}
         speed={starBorderSpeed}
       >
-        <ClickSpark
-          sparkColor={sparkColor}
-          sparkSize={sparkSize}
-          sparkRadius={sparkRadius}
-          sparkCount={sparkCount}
-          duration={sparkDuration}
-        >
-          <DotBadge
-            onClick={onClick}
-            isShadow={isShadow}
-            circleSize={circleSize}
-            circleColor={circleColor}
-            backgroundColor={backgroundColor}
-            textColor={textColor}
-            label={label}
-            width={width}
-            fontSize={fontSize}
-            lineHeight={lineHeight}
-            height={height}
-            borderStyle={borderStyle}
-            isHover={isHover}
-          />
-        </ClickSpark>
+        <DotBadge
+          onClick={onClick}
+          isShadow={isShadow}
+          circleSize={circleSize}
+          circleColor={circleColor}
+          backgroundColor={backgroundColor}
+          textColor={textColor}
+          label={label}
+          width={width}
+          fontSize={fontSize}
+          lineHeight={lineHeight}
+          height={height}
+          borderStyle={borderStyle}
+          isHover={isHover}
+        />
       </StarBorder>
     </div>
   );

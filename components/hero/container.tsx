@@ -1,6 +1,5 @@
 "use client";
 import { DotBadge } from "../ui";
-import ClickSpark from "../ui/click-spark";
 import { PixelTrailWithOverlay } from "../ui/trail-ovetlay";
 import { ASCIIGalaxy3D } from "./ascii-galaxy";
 import { HeroDescription } from "./description";
@@ -35,7 +34,7 @@ export function HeroContainer({
       </style>
 
       <main
-        className="relative z-10 rounded-xl  h-[85vh] bg-[#494848]/10 overflow-hidden items-center justify-between text-start  max-w-[343px] sm:max-w-[1340px] text-[#B7B7B7] mx-auto mt-[90px]           "
+        className="relative z-10 rounded-xl h-[85vh] bg-[#494848]/10 overflow-hidden items-center justify-between text-start  max-w-[343px] sm:max-w-[96%] text-[#B7B7B7] mx-auto mt-[90px]  "
         style={{}}
       >
         {" "}
@@ -56,7 +55,7 @@ export function HeroContainer({
               </div>
               <span className="text-[12px]">COMING SOON</span>
             </div>
-            <h4 className="text-[40px] md:text-6xl font-mono mt-[28px] font-normal mb-6 max-w-[550px]">
+            <h4 className="text-[34px] md:text-6xl font-mono mt-[28px] font-normal mb-6 max-w-[550px]">
               Your Gateway to Funded Trading
             </h4>
             <div className="flex flex-row justify-center items-center  gap-6  z-100">
@@ -72,27 +71,20 @@ export function HeroContainer({
                 borderStyle=" 1px solid #494848"
               />{" "}
               <div className="pb-2">
-                <ClickSpark
-                  sparkColor="#828282"
-                  sparkSize={10}
-                  sparkRadius={15}
-                  sparkCount={8}
-                >
-                  <DotBadge
-                    borderStyle="none"
-                    width={130}
-                    height={36}
-                    isHover
-                    fontSize={14}
-                    label="Launch App"
-                    isShadow={true}
-                    circleSize={8}
-                    circleColor="#080605"
-                    backgroundColor="white"
-                    textColor="#080605"
-                    onClick={onLaunch}
-                  />{" "}
-                </ClickSpark>
+                <DotBadge
+                  borderStyle="none"
+                  width={130}
+                  height={36}
+                  isHover
+                  fontSize={14}
+                  label="Launch App"
+                  isShadow={true}
+                  circleSize={8}
+                  circleColor="#080605"
+                  backgroundColor="white"
+                  textColor="#080605"
+                  onClick={onLaunch}
+                />{" "}
               </div>
             </div>
           </div>

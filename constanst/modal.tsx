@@ -5,7 +5,7 @@ const MODAL_CONFIG = {
     borderRadius: "rounded-2xl",
   },
   colors: {
-    background: "rgb(18, 18, 18, 0.1)",
+    background: "rgba(255, 255, 255, 0.05)",
     border: "#353535",
     text: {
       primary: "text-white",

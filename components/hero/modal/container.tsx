@@ -1,3 +1,4 @@
+import ClickSpark from "@/components/ui/click-spark";
 import { FORM_CONFIG, MODAL_CONFIG } from "@/constanst";
 import { useFormValidation } from "@/hooks";
 import { FormState, ModalContainerProps } from "@/interface";
@@ -145,37 +146,55 @@ export default function ModalContainer({
           backdropFilter: "blur(50px)",
         }}
       >
-        <div className="flex h-full justify-center gap-10 items-center">
-          <div className="flex-1 flex flex-col justify-center py-8 max-h-[80%] w-[310px]">
-            <ModalHeader step={formState.step} />
+        <ClickSpark
+          sparkColor="#BBBBBA"
+          sparkSize={12}
+          sparkRadius={25}
+          sparkCount={8}
+          duration={600}
+          easing="ease-out"
+          extraScale={1.2}
+        >
+          <div className="flex h-full justify-center gap-10 items-center">
+            <div className="flex-1 flex flex-col justify-center py-8 max-h-[80%] w-[310px]">
+              <ModalHeader step={formState.step} />
 
-            <div className="flex flex-col justify-center items-center ">
-              {formState.step !== "access" && (
-                <label
-                  className={`${MODAL_CONFIG.colors.text.label} text-xs mb-3    flex flex-row justify-between w-[310px]`}
-                >
-                  {formState.step === "email"
-                    ? FORM_CONFIG.messages.labels.emailAddress
-                    : FORM_CONFIG.messages.labels.username}
-                  {formState.error && (
-                    <span className={`text-[#AC3A3A] ml-10`}>
-                      {formState.error}
-                    </span>
-                  )}
-                </label>
-              )}
-              {renderStepContent()}
+              <div className="flex flex-col justify-center items-center ">
+                {formState.step !== "access" && (
+                  <label
+                    className={`${MODAL_CONFIG.colors.text.label} text-xs mb-3    flex flex-row justify-between w-[310px]`}
+                  >
+                    {formState.step === "email"
+                      ? FORM_CONFIG.messages.labels.emailAddress
+                      : FORM_CONFIG.messages.labels.username}
+                    {formState.error && (
+                      <span className={`text-[#AC3A3A] ml-10`}>
+                        {formState.error}
+                      </span>
+                    )}
+                  </label>
+                )}
+                {renderStepContent()}
+              </div>
+
+              {formState.step === "email" && <Footer />}
             </div>
 
-            {formState.step === "email" && <Footer />}
-          </div>
+            <div className=" justify-end items-center pr-4  hidden sm:flex">
+              <div
+                className="w-[470px] h-[600px] rounded-[15px] border border-[#252323] "
+                style={{
+                  backgroundColor: "rgb(18, 17, 17,0.2)",
 
-          <div className=" justify-end items-center pr-4  hidden sm:flex">
-            <div className="w-[470px] h-[600px] rounded-[15px] border border-[#252323] ">
-              <ASCIIGalaxy3D width={450} height={500} left="left-[70%]" />
+                  boxShadow:
+                    "rgb(18, 17, 17,0.2) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset",
+                }}
+              >
+                <ASCIIGalaxy3D width={450} height={500} left="left-[70%]" />
+              </div>
             </div>
           </div>
-        </div>
+        </ClickSpark>
       </div>
     </div>
   );

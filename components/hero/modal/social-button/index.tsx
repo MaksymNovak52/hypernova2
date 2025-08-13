@@ -16,7 +16,7 @@ const SocialButton: React.FC<{
 export const SocialLogin: React.FC<{
   onSocialLogin: (providerId: string) => void;
 }> = ({ onSocialLogin }) => (
-  <div className="flex gap-4 mb-4">
+  <div className="flex gap-4 mb-4 max-w-[310px]">
     {SOCIAL_PROVIDERS.map((provider) => (
       <SocialButton
         key={provider.id}

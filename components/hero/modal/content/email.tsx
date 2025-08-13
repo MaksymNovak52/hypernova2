@@ -1,4 +1,3 @@
-import ClickSpark from "@/components/ui/click-spark";
 import { FORM_CONFIG, MODAL_CONFIG } from "@/constanst";
 import { Divider } from "../divider";
 import { EmailInput } from "../inputs";
@@ -28,17 +27,15 @@ export function EmailContent({
         onBlur={handleBlur}
       />
       <div className="">
-        <ClickSpark>
-          <button
-            onClick={handleEmailSubmit}
-            style={{
-              background: "linear-gradient(107deg, #FFF 0%, #BBBBBA 100%)",
-            }}
-            className={`w-[310px] text-black ${MODAL_CONFIG.colors.button.primary} h-[32px] flex items-center justify-center text-sm font-medium py-2 px-2 rounded-lg transition-all duration-300 ease-in-out hover:scale-10 hover:animate-glow`}
-          >
-            {FORM_CONFIG.buttons.continue}
-          </button>
-        </ClickSpark>
+        <button
+          onClick={handleEmailSubmit}
+          style={{
+            background: "linear-gradient(107deg, #FFF 0%, #BBBBBA 100%)",
+          }}
+          className={`w-[310px] text-black ${MODAL_CONFIG.colors.button.primary} h-[32px] flex items-center justify-center text-sm font-medium py-2 px-2 rounded-lg transition-all duration-300 ease-in-out hover:scale-10 hover:animate-glow`}
+        >
+          {FORM_CONFIG.buttons.continue}
+        </button>
       </div>
       <Divider />
       <SocialLogin onSocialLogin={handleSocialLogin} />

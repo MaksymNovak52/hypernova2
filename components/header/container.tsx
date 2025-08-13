@@ -3,8 +3,8 @@ import { LogoLottie } from "../ui/logo-lottie";
 
 export function HeaderContainer({ onLaunch }: { onLaunch: () => void }) {
   return (
-    <header className="absolute top-0 left-0 w-full flex items-center justify-center z-10 h-[57px] pt-[30px] z-10000">
-      <section className="flex flex-row items-center justify-end sm:justify-between w-[1340px] py-2 rounded-full relative ">
+    <header className="absolute top-0 left-0  w-full flex items-center justify-center z-10 h-[57px] pt-[30px] z-10000">
+      <section className="flex flex-row items-center justify-end sm:justify-between sm:w-[96%] w-[1340px] py-2 rounded-full relative ">
         <video
           className="object-contain hidden sm:block"
           src="https://etzdcequxtapvhzpdyfk.supabase.co/storage/v1/object/public/test/logo_test.webm"
