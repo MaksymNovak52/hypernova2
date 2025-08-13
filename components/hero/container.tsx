@@ -2,6 +2,7 @@
 import { useIsMobile } from "@/hooks";
 import { DotBadge } from "../ui";
 import { PixelTrailWithOverlay } from "../ui/trail-ovetlay";
+import { ASCIIGalaxy3D } from "./ascii-galaxy";
 import { HeroDescription } from "./description";
 import { SocialContainer } from "./social";
 
@@ -97,6 +98,11 @@ export function HeroContainer({
               </div>
             </div>
           </div>
+          <ASCIIGalaxy3D
+            width={sceneWidth}
+            height={sceneHeight}
+            top=" top-[60%] sm:top-[65%] "
+          />
         </div>
       </main>
     </>

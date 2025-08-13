@@ -20,8 +20,8 @@ export default function HypernovaLandingPage() {
   const { markStepLoaded } = useSceneLoader(1);
   const [isLoading, setIsLoading] = useState(true);
   const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
-  const starCount = isMobile ? 300 : 800;
-  const textureSize = isMobile ? 16 : 20;
+  const starCount = isMobile ? 50 : 800;
+  const textureSize = isMobile ? 8 : 20;
 
   const starField = StarField({
     starCount,
