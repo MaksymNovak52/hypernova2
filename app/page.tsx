@@ -109,7 +109,7 @@ export default function HypernovaLandingPage() {
           <ModalContainer isOpen={isModalOpen} closeModal={closeModal} />
         )}
         <div
-          className={`sm:hidden flex flex-row items-center w-[200px]   text-center gap-2 relative pt-2 left-1/2 -translate-x-1/2  backdrop-blur-3xl z-[999] ${
+          className={`sm:hidden flex flex-row items-center w-[200px] text-center gap-2 relative pt-2 left-1/2 -translate-x-1/2 backdrop-blur-3xl z-[999] whitespace-nowrap ${
             isModalOpen && "opacity-5"
           }`}
         >
