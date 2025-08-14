@@ -60,7 +60,7 @@ export function HeroContainer({
             </div>
 
             <h4
-              className="text-[32px] md:text-6xl font-mono mt-[20px] font-normal mb-6 max-w-[550px] line-clamp-2"
+              className="text-[32px] md:text-6xl font-mono mt-[20px] font-normal mb-6 max-w-[790px] line-clamp-2"
               style={{
                 color: "rgba(228 228 228 / 100%)",
               }}
