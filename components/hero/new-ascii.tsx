@@ -1,6 +1,6 @@
 "use client";
 import AsciiScene from "@/helper/script-class";
-import { memo, useEffect, useId, useMemo, useRef } from "react";
+import { useEffect, useId, useMemo, useRef } from "react";
 
 type Props = {
   className?: string;
@@ -14,7 +14,7 @@ type Props = {
   usePortal?: boolean;
 };
 
-function AsciiCanvasComponent({
+export function AsciiCanvas({
   className,
   onReady,
   scale,
@@ -123,5 +123,3 @@ function AsciiCanvasComponent({
     />
   );
 }
-
-export const AsciiCanvas = memo(AsciiCanvasComponent);

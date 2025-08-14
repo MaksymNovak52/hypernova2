@@ -24,8 +24,8 @@ export default function ModalContainer({
   const isPhone = useIsMobile(800);
   const asciiConfig = useMemo(
     () => ({
-      scale: 14,
-      position: { x: -45, y: -4, z: -7 },
+      scale: 16,
+      position: { x: 0, y: -19, z: -7 },
       rotation: { x: -2, y: 0.1, z: -2 },
       pivotRotation: { x: -0.05, y: 0, z: 1 },
       rotationSpeed: 0,
@@ -218,9 +218,9 @@ export default function ModalContainer({
                       iconClassName="mx-1 text-white/60"
                     />
                     <AsciiCanvas
-                      className="rotate-[-90deg] will-change-transform [image-rendering:pixelated] [-webkit-font-smoothing:antialiased] [text-rendering:optimizeSpeed]"
-                      scale={14}
-                      position={{ x: -45, y: 1, z: -8 }}
+                      className="rotate-[-100deg] will-change-transform [image-rendering:pixelated] [-webkit-font-smoothing:antialiased] [text-rendering:optimizeSpeed]"
+                      scale={16}
+                      position={{ x: -49, y: 4, z: -10 }}
                       rotation={{ x: -2, y: 0.1, z: -1.8 }}
                       pivotRotation={{ x: -0.05, y: 0, z: 1 }}
                       rotationSpeed={0}
