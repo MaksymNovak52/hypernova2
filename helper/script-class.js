@@ -116,15 +116,15 @@ class AsciiScene {
       dir1.position.set(-25, 5, 40);
       this.scene.add(dir1);
     } else {
-      const ambient = new THREE.AmbientLight(0xffffff, 0.9);
+      const ambient = new THREE.AmbientLight(0xffffff, 0.985);
       this.scene.add(ambient);
 
-      const dir1 = new THREE.DirectionalLight(0xffffff, 1.2);
+      const dir1 = new THREE.DirectionalLight(0xffffff, 1.3);
       dir1.position.set(-25, 5, 40);
       this.scene.add(dir1);
 
       const dir2 = new THREE.DirectionalLight(0xffffff, 2.5);
-      dir2.position.set(5, 55, 0);
+      dir2.position.set(0, 55, 0);
       this.scene.add(dir2);
     }
   }
@@ -226,7 +226,7 @@ class AsciiScene {
       blurCode = `
         vec3 blurRGB = vec3(0.0);
         float blurSize = 20.0 / resolution.x;
-        int samples = 0;
+        int samples = 5;
         
         for (int x = -2; x <= 2; x++) {
             for (int y = -2; y <= 2; y++) {
@@ -252,7 +252,7 @@ class AsciiScene {
         time: { value: 0.0 },
         charCount: { value: this.CHAR_COUNT },
         pad: { value: 0.195 },
-        invGamma: { value: 1.85 },
+        invGamma: { value: 2 },
         isMobile: { value: this.isMobile ? 1.0 : 0.0 },
       },
       vertexShader: `
@@ -283,7 +283,7 @@ class AsciiScene {
         }
         
         float brightness(vec3 c){
-          return dot(c, vec3(0.299, 0.587, 0.114));
+          return dot(c, vec3(0.15, 0.507, 0.214));
         }
         
         void main(){
@@ -344,7 +344,7 @@ class AsciiScene {
           }
         
           float b = brightness(sceneRGB);
-          float darkCutoff = 0.002;
+          float darkCutoff = 0.001;
         
           if (!hasContent || b <= darkCutoff) {
               gl_FragColor = vec4(0.0, 0.0, 0.0, 0.0);
@@ -369,7 +369,7 @@ class AsciiScene {
           vec4 g = texture2D(fontTexture, atlasUV);
         
           float edge = 1.0;
-          float fw = fwidth(g.a) * 0.5;
+          float fw = fwidth(g.a) * .55;
           float a = smoothstep(edge - fw, edge + fw, g.a);
         
           vec3 ink = mix(vec3(0.0), vec3(1.0), b);
