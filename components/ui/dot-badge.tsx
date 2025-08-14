@@ -1,5 +1,6 @@
 import clsx from "clsx";
-import { ReactNode } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ReactNode, useState } from "react";
 
 type DotBadgeProps = {
   label?: string | ReactNode;
@@ -34,6 +35,8 @@ export function DotBadge({
   isHover = false,
   glowIntensity = 100,
 }: DotBadgeProps) {
+  const [isHovered, setIsHovered] = useState(false);
+
   const getRgbaFromColor = (color: string, alpha: number = 1) => {
     if (color.startsWith("#")) {
       const hex = color.slice(1);
@@ -84,13 +87,15 @@ export function DotBadge({
     ? "0 -3px 4px rgba(255, 255, 255, 0.1) inset, -5px -5px 250px rgba(255, 255, 255, 0.02) inset"
     : "none";
 
+  const shouldSwap = isHover && isHovered;
+
   return (
-    <button
+    <motion.button
       onClick={onClick}
+      onHoverStart={() => setIsHovered(true)}
+      onHoverEnd={() => setIsHovered(false)}
       className={clsx(
-        "relative group rounded-[12px] border flex items-center gap-2 justify-center",
-        "transition-[box-shadow,transform,background-color,background] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]",
-        isHover && "hover:animate-glow-hero"
+        "relative rounded-[12px] border flex items-center gap-2 justify-center overflow-hidden hover:animate-glow-hero"
       )}
       style={{
         ...(isGradient ? { background: backgroundColor } : { backgroundColor }),
@@ -101,26 +106,30 @@ export function DotBadge({
         lineHeight,
         border: borderStyle,
         boxShadow: baseInset,
-        willChange: "transform, box-shadow",
       }}
+      whileHover={isHover ? { scale: 1.02 } : {}}
+      transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
     >
-      {isHover && (
-        <div
-          aria-hidden
-          className={clsx(
-            "pointer-events-none absolute -inset-2 -z-10 rounded-[14px]",
-            "opacity-0 scale-95 blur-md",
-            "transition-[opacity,transform,filter] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
-            "group-hover:opacity-100 group-hover:scale-105"
-          )}
-          style={{
-            background: `radial-gradient(60% 60% at 50% 50%, ${glowColor} 0%, ${glowColorLight} 35%, rgba(0,0,0,0) 70%)`,
-            filter: `drop-shadow(0 0 ${40 * intensity}px ${glowColorLight})`,
-          }}
-        />
-      )}
+      <AnimatePresence>
+        {isHover && isHovered && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1.1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
+            className="pointer-events-none absolute -inset-2 -z-10 rounded-[14px] blur-md h"
+            style={{
+              background: `radial-gradient(60% 60% at 50% 50%, ${glowColor} 0%, ${glowColorLight} 35%, rgba(0,0,0,0) 70%)`,
+              filter: `drop-shadow(0 0 ${40 * intensity}px ${glowColorLight})`,
+            }}
+          />
+        )}
+      </AnimatePresence>
 
-      <span
+      <motion.span
+        layout
+        animate={shouldSwap ? { x: 80 } : { x: 0 }}
+        transition={{ duration: 0.8, ease: [0.25, 1, 0.5, 1] }}
         style={{
           width: circleSize,
           height: circleSize,
@@ -130,9 +139,15 @@ export function DotBadge({
           flex: "0 0 auto",
         }}
       />
-      <span className={typeof label !== "string" ? "mr-2" : undefined}>
+
+      <motion.span
+        layout
+        animate={shouldSwap ? { x: -20 } : { x: 0 }}
+        transition={{ duration: 0.8, ease: [0.25, 1, 0.5, 1] }}
+        className={typeof label !== "string" ? "mr-2" : undefined}
+      >
         {label}
-      </span>
-    </button>
+      </motion.span>
+    </motion.button>
   );
 }
