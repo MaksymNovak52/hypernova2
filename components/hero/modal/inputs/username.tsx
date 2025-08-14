@@ -10,7 +10,7 @@ export const UsernameInput: React.FC<{
 }> = ({ formState, onUsernameChange, onFocus, onBlur }) => {
   const inputStyles = useMemo(() => {
     const baseStyles =
-      "w-[310px] sm:h-[32px]  h-[40px] px-[10px] py-[10px] bg-transparent rounded-lg  text-sm text-white placeholder-gray-500 focus:outline-none transition-all duration-200";
+      "w-[310px] sm:h-[32px] h-[40px] px-[10px] py-[10px] bg-transparent rounded-lg text-[16px] sm:text-[12px] placeholder-gray-500 focus:outline-none transition-all duration-200";
     const errorStyles = "border-2 border-red-500";
     const normalStyles =
       "border border-gray-600 hover:border-gray-400 focus:border-white";
