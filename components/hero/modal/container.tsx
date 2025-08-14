@@ -1,3 +1,4 @@
+import { BuiltOnBadge } from "@/components/ui";
 import ClickSpark from "@/components/ui/click-spark";
 import { FORM_CONFIG, MODAL_CONFIG } from "@/constanst";
 import { useFormValidation, useIsMobile } from "@/hooks";
@@ -28,7 +29,7 @@ export default function ModalContainer({
       rotation: { x: -2, y: 0.1, z: -2 },
       pivotRotation: { x: -0.05, y: 0, z: 1 },
       rotationSpeed: 0,
-      cellSize: 5.0,
+      cellSize: 4.5,
 
       onReady: () => console.log("Fully configured scene ready!"),
     }),
@@ -86,10 +87,6 @@ export default function ModalContainer({
       error: "",
       isFocused: false,
     }));
-    console.log("Registration complete:", {
-      email: formState.email,
-      username: formState.username,
-    });
   };
 
   const handleBack = () => {
@@ -158,7 +155,7 @@ export default function ModalContainer({
       onClick={closeModal}
     >
       <div
-        className={`relative backdrop-blur-md rounded-2xl overflow-hidden shadow-2xl border border-[#4A4A49] w-full h-[650px] max-w-5xl  ${MODAL_CONFIG.animations.transition} scale-100`}
+        className={`relative backdrop-blur-md rounded-2xl overflow-hidden shadow-2xl border border-[#4A4A49] w-full h-[541px] sm:h-[650px] max-w-5xl  ${MODAL_CONFIG.animations.transition} scale-100`}
         onClick={modalClickHandler}
         style={{
           backgroundColor: MODAL_CONFIG.colors.background,
@@ -209,16 +206,28 @@ export default function ModalContainer({
                 }}
               >
                 {!isPhone && (
-                  <AsciiCanvas
-                    className=" rotate-[-100deg] "
-                    scale={asciiConfig.scale}
-                    position={asciiConfig.position}
-                    rotation={asciiConfig.rotation}
-                    pivotRotation={asciiConfig.pivotRotation}
-                    rotationSpeed={asciiConfig.rotationSpeed}
-                    cellSize={asciiConfig.cellSize}
-                    onReady={asciiConfig.onReady}
-                  />
+                  <>
+                    <BuiltOnBadge
+                      label="Powered by"
+                      brand="Hyperliquid"
+                      isDimmed={false}
+                      responsiveClassName="s"
+                      containerClassName="  z-999999 fixed top-[544px] left-[262px] bg-transparent "
+                      labelClassName="text-[10px] text-[#BBBBBA]"
+                      brandClassName="text-[10px]  text-white"
+                      iconClassName="mx-1 text-white/60"
+                    />
+                    <AsciiCanvas
+                      className="rotate-[-90deg] will-change-transform [image-rendering:pixelated] [-webkit-font-smoothing:antialiased] [text-rendering:optimizeSpeed]"
+                      scale={14}
+                      position={{ x: -45, y: -4, z: -7 }}
+                      rotation={{ x: -2, y: 0.1, z: -1.8 }}
+                      pivotRotation={{ x: -0.05, y: 0, z: 1 }}
+                      rotationSpeed={0}
+                      cellSize={3.2}
+                      onReady={asciiConfig.onReady}
+                    />
+                  </>
                 )}
               </div>
             </div>

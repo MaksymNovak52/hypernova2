@@ -41,7 +41,7 @@ export function LoaderOverlay({
       {phase !== "done" && (
         <motion.div
           key="overlay"
-          className="fixed inset-0 z-[9999] flex items-center justify-center bg-black"
+          className="fixed inset-0 z-[9999] flex items-center justify-center pointer-events-none bg-black з"
           initial={{ opacity: 1 }}
           animate={{ opacity: phase === "zoom" ? 0 : 1 }}
           exit={{ opacity: 0 }}

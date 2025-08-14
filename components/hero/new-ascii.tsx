@@ -48,9 +48,7 @@ function AsciiCanvasComponent({
   const memoizedCallback = useMemo(() => {
     return () => {
       onReady?.();
-      // @ts-ignore
       if (sceneRef.current?.asciiPass) {
-        // @ts-ignore
         sceneRef.current.asciiPass.uniforms.cellSize.value = cellSize;
       }
     };
@@ -117,7 +115,7 @@ function AsciiCanvasComponent({
   return (
     <div
       id={containerId}
-      className={className ?? "absolute inset-0 w-full h-full -z-10"}
+      className={`${className} absolute inset-0 w-full h-full -z-10`}
       style={{
         zIndex: -10,
         pointerEvents: "none",

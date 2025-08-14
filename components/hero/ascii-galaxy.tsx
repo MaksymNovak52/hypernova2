@@ -366,7 +366,6 @@ export function ASCIIGalaxy3D({
       });
       renderer.dispose();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [width, height, asciiWidth]);
 
   return (

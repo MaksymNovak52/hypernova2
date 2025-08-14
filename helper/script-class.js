@@ -225,7 +225,7 @@ class AsciiScene {
     } else {
       blurCode = `
         vec3 blurRGB = vec3(0.0);
-        float blurSize = 15.0 / resolution.x;
+        float blurSize = 20.0 / resolution.x;
         int samples = 0;
         
         for (int x = -2; x <= 2; x++) {
@@ -386,7 +386,7 @@ class AsciiScene {
       if (!this.asciiPass) return;
       this.asciiPass.uniforms.mouse.value.set(
         e.clientX,
-        window.innerHeight - e.clientY
+        window.innerHeight - e.clientY + 100
       );
     };
 

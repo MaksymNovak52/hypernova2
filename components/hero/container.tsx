@@ -40,7 +40,7 @@ export function HeroContainer({
       </style>
 
       <main className="relative z-10 rounded-xl h-[85vh] bg-transparent sm:bg-[#494848]/10 overflow-hidden items-center justify-between text-start max-w-[343px] sm:max-w-[96%] text-[#B7B7B7] mx-auto mt-[72px] sm:mt-[90px]">
-        <div className="box w-full h-full absolute"></div>
+        <div className="box w-full h-full absolute pointer-events-none"></div>
         <div className="px-4 flex max-h-[600px] sm:h-[85vh] overflow-hidden items-center justify-between text-start max-w-[1340px] text-[#B7B7B7] mx-auto">
           <SocialContainer />
           <HeroDescription />
@@ -68,7 +68,7 @@ export function HeroContainer({
               Your Gateway to Funded Trading
             </h4>
 
-            <div className="flex flex-row justify-center items-center gap-6 z-100">
+            <div className="flex flex-row justify-center items-center gap-6 z-1000000">
               <PixelTrailWithOverlay
                 width={130}
                 height={36}
@@ -106,6 +106,7 @@ export function HeroContainer({
             rotation={{ x: 0.6, y: 0.1, z: -0.4 }}
             pivotRotation={{ x: -0.05, y: 0, z: 0 }}
             rotationSpeed={0.01}
+            className="will-change-transform pointer-events-none [image-rendering:pixelated] [-webkit-font-smoothing:antialiased] [text-rendering:optimizeSpeed]"
             cellSize={5.0}
             onReady={() => console.log("Fully configured scene ready!")}
           />

@@ -64,7 +64,7 @@ const CONTENT_CONFIG = {
     subtitle: "Set a unique username for your Hypernova profile",
   },
   access: {
-    title: "You’re #42 out of 1,313 in the Queue!",
+    title: "You’re #42 in the Queue!",
     subtitle: "Check back soon for access",
   },
   footer:

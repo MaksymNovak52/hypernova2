@@ -41,7 +41,12 @@ export const ModalHeader: React.FC<{
         `}
       >
         <h1
-          className={`${MODAL_CONFIG.colors.text.primary} text-[26px] font-light mb-1 line-clamp-2`}
+          className={`${
+            MODAL_CONFIG.colors.text.primary
+          } text-[26px] font-light mb-1 line-clamp-2
+          
+   ${step === "access" && "leading-8"}
+          `}
         >
           {title}
         </h1>
