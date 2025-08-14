@@ -95,7 +95,9 @@ export function DotBadge({
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
       className={clsx(
-        "relative rounded-[12px] border flex items-center gap-2 justify-center overflow-hidden hover:animate-glow-hero"
+        `relative rounded-[12px] border flex items-center gap-2 justify-center overflow-hidden ${
+          isHover && "hover:animate-glow-hero"
+        }`
       )}
       style={{
         ...(isGradient ? { background: backgroundColor } : { backgroundColor }),
