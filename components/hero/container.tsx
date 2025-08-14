@@ -1,11 +1,11 @@
 "use client";
 import { useIsMobile } from "@/hooks";
+import { BackgroundGlow } from "../base";
 import { DotBadge } from "../ui";
 import { PixelTrailWithOverlay } from "../ui/trail-ovetlay";
 import { HeroDescription } from "./description";
 import { AsciiCanvas } from "./new-ascii";
 import { SocialContainer } from "./social";
-
 export function HeroContainer({
   onAsciiReady,
   onLaunch,
@@ -44,7 +44,7 @@ export function HeroContainer({
         <div className="px-4 flex max-h-[600px] sm:h-[85vh] overflow-hidden items-center justify-between text-start max-w-[1340px] text-[#B7B7B7] mx-auto">
           <SocialContainer />
           <HeroDescription />
-
+          <BackgroundGlow />
           <div className="mb-10 animate-fade-in-up flex flex-col mx-auto justify-start h-full text-center pt-[30px] sm:pt-[65px]">
             <div className="flex flex-row justify-center items-center gap-4 uppercase">
               <span className="text-[12px]">early access</span>
@@ -60,7 +60,7 @@ export function HeroContainer({
             </div>
 
             <h4
-              className="text-[34px] md:text-6xl font-mono mt-[28px] font-normal mb-6 max-w-[550px] line-clamp-2"
+              className="text-[34px] md:text-6xl font-mono mt-[20px] font-normal mb-6 max-w-[550px] line-clamp-2"
               style={{
                 color: "rgba(228 228 228 / 100%)",
               }}
@@ -68,7 +68,7 @@ export function HeroContainer({
               Your Gateway to Funded Trading
             </h4>
 
-            <div className="flex flex-row justify-center items-center gap-6 z-1000000">
+            <div className="flex flex-row justify-center items-center gap-[15px] z-1000000">
               <PixelTrailWithOverlay
                 width={130}
                 height={36}

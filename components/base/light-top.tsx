@@ -1,8 +1,6 @@
-import Image, { StaticImageData } from "next/image";
+import React from "react";
 
-interface BackgroundImageProps {
-  src: StaticImageData;
-  alt: string;
+interface GlowProps {
   className?: string;
   position?: {
     top?: string;
@@ -10,33 +8,48 @@ interface BackgroundImageProps {
     right?: string;
     bottom?: string;
   };
-  rotation?: string;
-  width?: string;
-  opacity?: string;
-  zIndex?: string;
+  rotation?: string; // напр. "-200deg"
+  width?: string; // напр. "800px"
+  height?: string; // якщо не вкажеш — буде = width
+  opacity?: number; // 0..1
+  blur?: string; // напр. "80px"
+  zIndex?: number;
 }
 
-export const BackgroundImage = ({
-  src,
-  alt,
+export const BackgroundGlow = ({
   className = "",
-  position = { top: "-80vh", left: "-15vw" },
+  position = { top: "-400px", left: "-350px" },
   rotation = "-200deg",
-  width = "80px",
-  opacity = "80",
-  zIndex = "0",
-}: BackgroundImageProps) => {
-  const positionStyles = Object.entries(position)
-    .map(([key, value]) => `${key}-[${value}]`)
-    .join(" ");
+  width = "800px",
+  height,
+  opacity = 0.35,
+  blur = "80px",
+  zIndex = 10,
+}: GlowProps) => {
+  const style: React.CSSProperties = {
+    position: "absolute",
+    top: position.top,
+    left: position.left,
+    right: position.right,
+    bottom: position.bottom,
+    transform: `rotate(${rotation})`,
+    width,
+    height: height ?? width,
+    opacity,
+    zIndex,
+    pointerEvents: "none",
+  };
 
   return (
-    <>
-      <Image
-        src={src}
-        alt={alt}
-        className={`fixed w-[800px] rotate-[-200deg] left-[-5vw] top-[-80vh] ${className}   opacity-50`}
+    <div style={style} className={className}>
+      <div
+        className="absolute inset-0 rounded-full"
+        style={{
+          background:
+            "radial-gradient(ellipse at center, rgba(250,204,21,0.02) 0%, rgba(250,204,21,0.08) 35%, rgba(250,204,21,0.09) 60%, rgba(250,204,21,0.08) 75%, transparent 100%)",
+          filter: `blur(${blur})`,
+        }}
       />
-    </>
+    </div>
   );
 };

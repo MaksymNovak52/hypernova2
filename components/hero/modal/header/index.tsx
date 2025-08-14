@@ -51,7 +51,7 @@ export const ModalHeader: React.FC<{
           {title}
         </h1>
         <p
-          className={`${MODAL_CONFIG.colors.text.secondary}   ${
+          className={`${MODAL_CONFIG.colors.text.secondary}  opacity-80 ${
             step === "username" && "w-[280px]"
           } text-[14px] text-center`}
         >
