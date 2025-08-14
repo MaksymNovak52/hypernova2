@@ -23,12 +23,13 @@ export default function ModalContainer({
   const isPhone = useIsMobile(800);
   const asciiConfig = useMemo(
     () => ({
-      scale: 12,
-      position: { x: -49, y: 3, z: 1 },
-      rotation: { x: -1, y: 0.1, z: -4.87 },
+      scale: 14,
+      position: { x: -45, y: -4, z: -7 },
+      rotation: { x: -2, y: 0.1, z: -2 },
       pivotRotation: { x: -0.05, y: 0, z: 1 },
-      rotationSpeed: 0.01,
+      rotationSpeed: 0,
       cellSize: 5.0,
+
       onReady: () => console.log("Fully configured scene ready!"),
     }),
     []
@@ -146,7 +147,6 @@ export default function ModalContainer({
     e.stopPropagation();
   };
 
-  // Determine if ASCII should be hidden based on input activity
   const shouldHideAscii =
     formState.isFocused ||
     (formState.step !== "access" &&
@@ -210,6 +210,7 @@ export default function ModalContainer({
               >
                 {!isPhone && (
                   <AsciiCanvas
+                    className=" rotate-[-100deg] "
                     scale={asciiConfig.scale}
                     position={asciiConfig.position}
                     rotation={asciiConfig.rotation}

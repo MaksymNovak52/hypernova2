@@ -30,7 +30,6 @@ function AsciiCanvasComponent({
   const sceneRef = useRef<AsciiScene | null>(null);
   const portalContainerRef = useRef<HTMLDivElement | null>(null);
 
-  // Memoize object props to prevent unnecessary re-renders
   const memoizedPosition = useMemo(
     () => position,
     [position?.x, position?.y, position?.z]
@@ -46,7 +45,6 @@ function AsciiCanvasComponent({
     [pivotRotation?.x, pivotRotation?.y, pivotRotation?.z]
   );
 
-  // Memoize the callback to prevent re-renders
   const memoizedCallback = useMemo(() => {
     return () => {
       onReady?.();

@@ -102,7 +102,7 @@ export function HeroContainer({
 
           <AsciiCanvas
             scale={isMobile ? 10 : 20}
-            position={{ x: isMobile ? 1 : 8, y: isMobile ? 5 : 3, z: 1 }}
+            position={{ x: isMobile ? 1 : 8, y: isMobile ? 5 : 5, z: 1 }}
             rotation={{ x: 0.6, y: 0.1, z: -0.4 }}
             pivotRotation={{ x: -0.05, y: 0, z: 0 }}
             rotationSpeed={0.01}
