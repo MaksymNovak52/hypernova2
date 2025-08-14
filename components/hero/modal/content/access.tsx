@@ -45,7 +45,7 @@ export const AccessStep: React.FC<AccessStepProps> = ({
               if (e.key === "Enter") onCommit();
               if (e.key === "Escape") onCancel();
             }}
-            className="  text-xs h-[16px] w-[95%] bg-transparent text-[#BBBBBA] outline-none"
+            className="  text-[16px] sm:text-sm h-[16px] w-[95%] bg-transparent text-[#BBBBBA] outline-none"
             placeholder="Enter value"
           />
           {value.length > 0 ? (
