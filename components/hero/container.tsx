@@ -59,6 +59,7 @@ export default function HeroContainer({
               </div>
               <span className="text-[12px]">COMING SOON</span>
             </div>
+
             <ScrambledText>
               <h4
                 className="text-[32px] md:text-6xl font-[var(--font-anonymous-pro)] mt-[20px] leading-6  mb-6 max-w-[600px] line-clamp-2"
