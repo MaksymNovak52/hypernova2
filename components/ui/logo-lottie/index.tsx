@@ -10,8 +10,10 @@ export function LogoLottie({
   size = 48,
   autoplay = true,
   loop = false,
+  onComplete,
 }: {
   size?: number;
+  onComplete?: () => void;
   loop?: boolean;
   autoplay?: boolean;
 }) {
@@ -29,6 +31,7 @@ export function LogoLottie({
       animationData={animationData}
       loop={loop}
       autoplay={true}
+      onComplete={onComplete}
       style={{ width: size, height: size }}
     />
   );

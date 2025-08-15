@@ -96,9 +96,7 @@ export default function HypernovaLandingPage() {
             isModalOpen ? "opacity-30" : "opacity-100"
           }`}
         />
-        {!isMobile && !isLoading && (
-          <TargetCursor spinDuration={2} hideDefaultCursor={true} />
-        )}
+        {!isMobile && !isLoading && <TargetCursor spinDuration={2} />}
 
         <HeaderContainer onLaunch={openModal} />
         <HeroContainer onAsciiReady={markStepLoaded} onLaunch={openModal} />

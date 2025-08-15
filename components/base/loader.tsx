@@ -1,7 +1,7 @@
 import BgImage from "@/assets/bckg.svg";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
-import { memo, useCallback, useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { LogoLottie } from "../ui/logo-lottie";
 
 type LoaderPhase = "logo" | "zoomIn" | "end";
@@ -12,55 +12,51 @@ type LoaderOverlayProps = {
   scaleTransitionMs?: number;
   onComplete?: () => void;
   phase?: LoaderPhase;
-  setPhase?: (phase: LoaderPhase) => void;
 };
 
-const LoaderOverlayComponent = ({
-  logoDisplayMs = 2000,
+export function Load({
+  logoDisplayMs = 1800,
   zoomTransitionMs = 400,
   scaleTransitionMs = 600,
   onComplete,
-}: LoaderOverlayProps) => {
+}: LoaderOverlayProps) {
   const [phase, setPhase] = useState<"logo" | "zoomIn" | "end">("logo");
   const [isLoaderVisible, setIsLoaderVisible] = useState(true);
   const [isBgVisible, setIsBgVisible] = useState(false);
   const [startBgScaling, setStartBgScaling] = useState(false);
   const [isLogoVisible, setIsLogoVisible] = useState(true);
   const [isImageVisible, setIsImageVisible] = useState(false);
-
   const [bgAnimationDuration, setBgAnimationDuration] = useState(0);
 
-  const phaseTransition = useCallback(() => {
+  useEffect(() => {
     let phaseTimer: NodeJS.Timeout;
+
     if (phase === "logo") {
       phaseTimer = setTimeout(() => {
-        setIsImageVisible(true);
         setPhase("zoomIn");
       }, logoDisplayMs);
     } else if (phase === "zoomIn") {
-      setIsLogoVisible(false);
-      setIsBgVisible(true);
-      setStartBgScaling(true);
+      setTimeout(() => {
+        setIsLogoVisible(false);
+        setIsImageVisible(true);
+        setIsBgVisible(true);
+        setStartBgScaling(true);
+      }, 100);
 
-      const totalBgDuration = (zoomTransitionMs + scaleTransitionMs) / 1100;
+      const totalBgDuration = (zoomTransitionMs + scaleTransitionMs) / 1000;
       setBgAnimationDuration(totalBgDuration);
 
       phaseTimer = setTimeout(() => {
-        setPhase("end");
-      }, zoomTransitionMs);
-    } else if (phase === "end") {
-      phaseTimer = setTimeout(() => {
         setIsLoaderVisible(false);
         onComplete?.();
-      }, scaleTransitionMs);
+      }, zoomTransitionMs + scaleTransitionMs);
     }
 
-    return () => clearTimeout(phaseTimer);
+    return () => {
+      clearTimeout(phaseTimer);
+    };
   }, [phase, logoDisplayMs, zoomTransitionMs, scaleTransitionMs, onComplete]);
-
-  useEffect(() => {
-    phaseTransition();
-  }, [phase, phaseTransition]);
+  console.log("zoomTransitionMs / 1000", bgAnimationDuration);
 
   return (
     <AnimatePresence>
@@ -70,49 +66,50 @@ const LoaderOverlayComponent = ({
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
         >
-          <motion.div
-            key="scaling-background"
-            className="absolute inset-0 overflow-hidden"
-            initial={{ opacity: 0 }}
-            animate={isBgVisible ? { opacity: 1 } : { opacity: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <motion.div
-              className="absolute inset-0"
-              initial={{ scale: 1 }}
-              animate={startBgScaling ? { scale: 100 } : { scale: 1 }}
-              transition={{
-                duration: bgAnimationDuration,
-                ease: [0.77, 0, 0.18, 1],
-              }}
-            >
-              <div
-                className="relative h-full w-full"
-                style={{ transform: "translateY(-3.4px)" }}
+          <AnimatePresence>
+            {isImageVisible && (
+              <motion.div
+                key="scaling-background"
+                className="absolute inset-0 overflow-hidden"
+                initial={{ opacity: 1 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
               >
-                <Image
-                  src={BgImage}
-                  alt="Background transition"
-                  fill
-                  style={{ objectFit: "cover" }}
-                  priority
-                  quality={90}
-                />
-              </div>
-            </motion.div>
-          </motion.div>
+                <motion.div
+                  className="absolute inset-0"
+                  initial={{ scale: 1 }}
+                  animate={startBgScaling ? { scale: 450 } : { scale: 1 }}
+                  transition={{
+                    duration: 1.5,
+                    ease: [0.77, 0, 0.18, 1],
+                  }}
+                >
+                  <div
+                    className="relative h-full w-full"
+                    style={{ transform: "translateY(-3.4px)" }}
+                  >
+                    <Image
+                      src={BgImage}
+                      alt="Background transition"
+                      fill
+                      style={{ objectFit: "cover" }}
+                      priority
+                      quality={100}
+                    />
+                  </div>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           <AnimatePresence>
             {isLogoVisible && (
               <motion.div
                 key="logo"
                 className="absolute inset-0 flex items-center justify-center bg-black"
-                exit={{
-                  scale: 2,
-                  opacity: 0,
-                }}
+                exit={{ scale: 2 }}
                 transition={{
-                  duration: zoomTransitionMs / 1000,
+                  duration: 0.1,
                   ease: "easeIn",
                 }}
               >
@@ -124,6 +121,6 @@ const LoaderOverlayComponent = ({
       )}
     </AnimatePresence>
   );
-};
+}
 
-export const LoaderOverlay = memo(LoaderOverlayComponent);
+export const LoaderOverlay = memo(Load);
