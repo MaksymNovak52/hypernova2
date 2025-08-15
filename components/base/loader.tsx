@@ -86,10 +86,7 @@ function Load({
                     ease: [0.77, 0, 0.18, 1],
                   }}
                 >
-                  <div
-                    className="relative h-full w-full"
-                    style={{ transform: "translateY(-3.4px)" }}
-                  >
+                  <div className="relative h-full w-full transform translate-y-[-1px] sm:translate-y-[-3.4px]">
                     <Image
                       src={BgImage}
                       alt="Background transition"
