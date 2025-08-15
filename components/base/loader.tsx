@@ -80,7 +80,7 @@ export function LoaderOverlay({
               animate={startBgScaling ? { scale: 100 } : { scale: 1 }}
               transition={{
                 duration: bgAnimationDuration,
-                ease: [0.02, 0.05, 0.855, 0.06],
+                ease: [0.4, 0, 0.6, 1],
               }}
             >
               <Image
