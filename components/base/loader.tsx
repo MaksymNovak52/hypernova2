@@ -27,7 +27,6 @@ function Load({
   const [isLogoVisible, setIsLogoVisible] = useState(true);
   const [isImageVisible, setIsImageVisible] = useState(false);
 
-  // Memoize the background animation duration to avoid unnecessary re-calculations
   const bgAnimationDuration = useMemo(
     () => (zoomTransitionMs + scaleTransitionMs) / 1000,
     [zoomTransitionMs, scaleTransitionMs]
