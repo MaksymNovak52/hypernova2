@@ -14,7 +14,7 @@ export const TargetCursor: React.FC<TargetCursorProps> = ({
   hideDefaultCursor = true,
 }) => {
   const cursorRef = useRef<HTMLDivElement>(null);
-  const cornersRef = useRef<NodeListOf<HTMLDivElement>>(null);
+  const cornersRef = useRef<HTMLDivElement[]>([]);
   const spinTl = useRef<gsap.core.Timeline>(null);
   const dotRef = useRef<HTMLDivElement>(null);
   const constants = useMemo(
@@ -45,8 +45,8 @@ export const TargetCursor: React.FC<TargetCursorProps> = ({
     }
 
     const cursor = cursorRef.current;
-    cornersRef.current = cursor.querySelectorAll<HTMLDivElement>(
-      ".target-cursor-corner"
+    cornersRef.current = Array.from(
+      cursor.querySelectorAll<HTMLDivElement>(".target-cursor-corner")
     );
 
     let activeTarget: Element | null = null;
