@@ -23,7 +23,9 @@ export default function HypernovaLandingPage() {
   const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
   const starCount = isMobile ? 50 : 800;
   const textureSize = isMobile ? 8 : 20;
-
+  const handleLoadingComplete = useCallback(() => {
+    setIsLoading(false);
+  }, []);
   const starField = StarField({
     starCount,
     textureSize,
@@ -81,7 +83,7 @@ export default function HypernovaLandingPage() {
   return (
     <>
       <div className="relative w-full  h-screen overflow-hidden text-white bg-black">
-        {isLoading && <LoaderOverlay />}
+        <LoaderOverlay onComplete={handleLoadingComplete} />
         {isModalOpen && (
           <div
             className="fixed inset-0 bg-black bg-opacity-80 backdrop-blur-sm z-40 transition-all duration-300"
@@ -94,7 +96,7 @@ export default function HypernovaLandingPage() {
             isModalOpen ? "opacity-30" : "opacity-100"
           }`}
         />
-        {!isMobile && (
+        {!isMobile && !isLoading && (
           <TargetCursor spinDuration={2} hideDefaultCursor={true} />
         )}
 
