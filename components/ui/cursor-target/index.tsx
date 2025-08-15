@@ -58,6 +58,7 @@ export const TargetCursor: React.FC<TargetCursorProps> = ({
     );
 
     let activeTarget: Element | null = null;
+
     let currentTargetMove: ((ev: Event) => void) | null = null;
     let currentLeaveHandler: (() => void) | null = null;
     let isAnimatingToTarget = false;
