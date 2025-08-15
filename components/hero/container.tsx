@@ -2,6 +2,7 @@
 import { useIsMobile } from "@/hooks";
 import { BackgroundGlow } from "../base";
 import { DotBadge } from "../ui";
+import { ScrambledText } from "../ui/scrumbler";
 import { PixelTrailWithOverlay } from "../ui/trail-ovetlay";
 import { HeroDescription } from "./description";
 import { AsciiCanvas } from "./new-ascii";
@@ -58,16 +59,16 @@ export function HeroContainer({
               </div>
               <span className="text-[12px]">COMING SOON</span>
             </div>
-
-            <h4
-              className="text-[32px] md:text-6xl font-mono mt-[20px] font-normal mb-6 max-w-[790px] line-clamp-2"
-              style={{
-                color: "rgba(228 228 228 / 100%)",
-              }}
-            >
-              Your Gateway to Funded Trading
-            </h4>
-
+            <ScrambledText>
+              <h4
+                className="text-[32px] md:text-6xl font-mono mt-[20px] font-normal mb-6 max-w-[790px] line-clamp-2"
+                style={{
+                  color: "rgba(228 228 228 / 100%)",
+                }}
+              >
+                Your Gateway to Funded Trading
+              </h4>
+            </ScrambledText>
             <div className="flex flex-row justify-center items-center gap-[15px] z-1000000">
               <PixelTrailWithOverlay
                 width={130}

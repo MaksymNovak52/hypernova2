@@ -65,7 +65,7 @@ export function SocialContainer() {
         />{" "}
       </div>
       <div className="sm:flex flex-row items-center hidden text-center  gap-2  max-sm:absolute max-sm:bottom-[-80px] max-sm:left-1/2 transform max-sm:-translate-x-1/2 ">
-        <span className="text-base text-[#494848] leading-[150%]  ">
+        <span className="text-base text-[#848484] leading-[150%]  ">
           Built on
         </span>
         <svg

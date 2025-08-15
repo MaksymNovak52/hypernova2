@@ -1,100 +1,115 @@
 "use client";
-
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import BgImage from "@/assets/bckg.svg";
+import { AnimatePresence, motion } from "framer-motion";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { LogoLottie } from "../ui/logo-lottie";
 
+type LoaderPhase = "logo" | "zoomIn" | "end";
+
 type LoaderOverlayProps = {
-  idleMs?: number;
-  zoomMs?: number;
-  flashMs?: number;
+  logoDisplayMs?: number;
+  zoomTransitionMs?: number;
+  scaleTransitionMs?: number;
+  onComplete?: () => void;
 };
 
 export function LoaderOverlay({
-  idleMs = 2500,
-  zoomMs = 900,
-  flashMs = 180,
+  logoDisplayMs = 2000,
+  zoomTransitionMs = 400,
+  scaleTransitionMs = 600,
+  onComplete,
 }: LoaderOverlayProps) {
-  const prefersReduced = useReducedMotion();
-  const [phase, setPhase] = useState<"idle" | "zoom" | "done">("idle");
+  const [phase, setPhase] = useState<LoaderPhase>("logo");
+  const [isLoaderVisible, setIsLoaderVisible] = useState(true);
+  const [isBgVisible, setIsBgVisible] = useState(false);
+  const [startBgScaling, setStartBgScaling] = useState(false);
+  const [isLogoVisible, setIsLogoVisible] = useState(true);
+
+  const [bgAnimationDuration, setBgAnimationDuration] = useState(0);
 
   useEffect(() => {
-    if (prefersReduced) {
-      const t = setTimeout(() => setPhase("done"), idleMs);
-      return () => clearTimeout(t);
+    let phaseTimer: NodeJS.Timeout;
+
+    if (phase === "logo") {
+      phaseTimer = setTimeout(() => {
+        setPhase("zoomIn");
+      }, logoDisplayMs);
+    } else if (phase === "zoomIn") {
+      setIsLogoVisible(false);
+
+      setIsBgVisible(true);
+      setStartBgScaling(true);
+
+      const totalBgDuration = (zoomTransitionMs + scaleTransitionMs) / 1100;
+      setBgAnimationDuration(totalBgDuration);
+
+      phaseTimer = setTimeout(() => {
+        setPhase("end");
+      }, zoomTransitionMs);
+    } else if (phase === "end") {
+      phaseTimer = setTimeout(() => {
+        setIsLoaderVisible(false);
+        onComplete?.();
+      }, scaleTransitionMs);
     }
 
-    if (phase !== "idle") return;
-    const t = setTimeout(() => setPhase("zoom"), idleMs);
-    return () => clearTimeout(t);
-  }, [phase, idleMs, prefersReduced]);
-
-  useEffect(() => {
-    if (phase !== "zoom") return;
-    const total = zoomMs + flashMs + 200;
-    const t = setTimeout(() => setPhase("done"), total);
-    return () => clearTimeout(t);
-  }, [phase, zoomMs, flashMs]);
+    return () => {
+      clearTimeout(phaseTimer);
+    };
+  }, [phase, logoDisplayMs, zoomTransitionMs, scaleTransitionMs, onComplete]);
 
   return (
     <AnimatePresence>
-      {phase !== "done" && (
+      {isLoaderVisible && (
         <motion.div
-          key="overlay"
-          className="fixed inset-0 z-[9999] flex items-center justify-center pointer-events-none bg-black з"
-          initial={{ opacity: 1 }}
-          animate={{ opacity: phase === "zoom" ? 0 : 1 }}
+          className="fixed inset-0 z-[9999]"
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.3 }}
         >
           <motion.div
-            className="relative"
-            initial={{ scale: 1, opacity: 1 }}
-            animate={
-              phase === "zoom"
-                ? { scale: 6, opacity: 0.8 }
-                : { scale: 1, opacity: 1 }
-            }
-            transition={{
-              duration: phase === "zoom" ? zoomMs / 1000 : 0,
-              ease: [0.22, 1, 0.36, 1],
-            }}
+            key="scaling-background"
+            className="absolute inset-0 overflow-hidden"
+            initial={{ opacity: 0 }}
+            animate={isBgVisible ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ duration: 0.3 }}
           >
-            <AnimatePresence>
-              {phase === "zoom" && (
-                <motion.span
-                  key="ring"
-                  className="absolute inset-0 -z-10 rounded-full border border-white/40 blur-[0.5px]"
-                  style={{
-                    width: "120%",
-                    height: "120%",
-                    left: "-10%",
-                    top: "-10%",
-                  }}
-                  initial={{ scale: 0.9, opacity: 0.0 }}
-                  animate={{ scale: 1.6, opacity: 0.7 }}
-                  exit={{ opacity: 0 }}
-                  transition={{
-                    duration: zoomMs / 1000,
-                    ease: [0.22, 1, 0.36, 1],
-                  }}
-                />
-              )}
-            </AnimatePresence>
-
-            <LogoLottie size={800} autoplay loop={false} />
+            <motion.div
+              className="absolute inset-0"
+              initial={{ scale: 1 }}
+              animate={startBgScaling ? { scale: 100 } : { scale: 1 }}
+              transition={{
+                duration: bgAnimationDuration,
+                ease: [0.02, 0.05, 0.855, 0.06],
+              }}
+            >
+              <Image
+                src={BgImage}
+                alt="Background transition"
+                fill
+                style={{ objectFit: "cover" }}
+                priority
+                quality={90}
+              />
+            </motion.div>
           </motion.div>
 
           <AnimatePresence>
-            {phase === "zoom" && (
+            {isLogoVisible && (
               <motion.div
-                key="flash"
-                className="absolute inset-0 bg-white"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: flashMs / 1000, ease: "easeOut" }}
-              />
+                key="logo"
+                className="absolute inset-0 flex items-center justify-center bg-black"
+                exit={{
+                  scale: 2,
+                  opacity: 0,
+                }}
+                transition={{
+                  duration: zoomTransitionMs / 1000,
+                  ease: "easeIn",
+                }}
+              >
+                <LogoLottie size={800} autoplay loop={false} />
+              </motion.div>
             )}
           </AnimatePresence>
         </motion.div>

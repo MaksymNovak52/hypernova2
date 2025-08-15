@@ -7,7 +7,7 @@ import {
   StarField,
 } from "@/components";
 import { BuiltOnBadge } from "@/components/ui";
-import ClickSpark from "@/components/ui/click-spark";
+import { TargetCursor } from "@/components/ui/cursor-target";
 import { useSceneLoader, useThreeJSBackground } from "@/hooks";
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useState } from "react";
@@ -79,15 +79,7 @@ export default function HypernovaLandingPage() {
   }, [isModalOpen]);
 
   return (
-    <ClickSpark
-      sparkColor="#BBBBBA"
-      sparkSize={12}
-      sparkRadius={25}
-      sparkCount={8}
-      duration={600}
-      easing="ease-out"
-      extraScale={1.2}
-    >
+    <>
       <div className="relative w-full  h-screen overflow-hidden text-white bg-black">
         {isLoading && <LoaderOverlay />}
         {isModalOpen && (
@@ -102,6 +94,9 @@ export default function HypernovaLandingPage() {
             isModalOpen ? "opacity-30" : "opacity-100"
           }`}
         />
+        {!isMobile && (
+          <TargetCursor spinDuration={2} hideDefaultCursor={true} />
+        )}
 
         <HeaderContainer onLaunch={openModal} />
         <HeroContainer onAsciiReady={markStepLoaded} onLaunch={openModal} />
@@ -121,6 +116,6 @@ export default function HypernovaLandingPage() {
           iconClassName="mx-1 text-white/60"
         />
       </div>
-    </ClickSpark>
+    </>
   );
 }

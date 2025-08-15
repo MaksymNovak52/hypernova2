@@ -6,7 +6,7 @@ export function HeaderContainer({ onLaunch }: { onLaunch: () => void }) {
     <header className="absolute top-0 left-0  w-full flex items-center justify-center z-10 h-[57px] pt-[30px] z-10000">
       <section className="flex flex-row items-center justify-end sm:justify-between sm:w-[96%] w-[1340px] py-2 rounded-full relative ">
         <video
-          className="object-contain hidden sm:block"
+          className="object-contain hidden sm:block cursor-target"
           src="https://etzdcequxtapvhzpdyfk.supabase.co/storage/v1/object/public/test/logo_test.webm"
           autoPlay
           loop
@@ -19,11 +19,11 @@ export function HeaderContainer({ onLaunch }: { onLaunch: () => void }) {
           <LogoLottie size={400} />
         </div>{" "}
         <div className="flex items-center space-x-6 pr-4 sm:pr-0">
-          <UnderLineText className="text-[14px] sm:text-base">
+          <UnderLineText className="text-[14px] sm:text-base cursor-target">
             About Us
           </UnderLineText>
 
-          <div className="pb-2">
+          <div className="pb-2 ">
             <DotBadge
               borderStyle="none"
               width={130}

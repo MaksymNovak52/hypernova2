@@ -95,7 +95,7 @@ export function DotBadge({
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
       className={clsx(
-        `relative rounded-[12px] border flex items-center gap-2 justify-center overflow-hidden ${
+        `relative rounded-[12px] border flex items-center gap-2 justify-center overflow-hidden cursor-target ${
           isHover && "hover:animate-glow-hero"
         }`
       )}
