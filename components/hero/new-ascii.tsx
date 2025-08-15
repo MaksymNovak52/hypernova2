@@ -26,7 +26,9 @@ export function AsciiCanvas({
   usePortal = false,
 }: Props) {
   const reactId = useId().replace(/[:]/g, "");
+
   const containerId = `ascii-${reactId}`;
+
   const sceneRef = useRef<AsciiScene | null>(null);
   const portalContainerRef = useRef<HTMLDivElement | null>(null);
 
