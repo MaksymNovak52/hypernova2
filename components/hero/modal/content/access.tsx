@@ -36,7 +36,7 @@ export const AccessStep: React.FC<AccessStepProps> = ({
 
     <div>
       {isEditing ? (
-        <div className="flex flex-row gap-1 h-[26px] items-center w-[240px] rounded-md  bg-[rgba(255,255,255,0.05)]  border border-[#BBBBBA] px-2 ">
+        <div className="flex flex-row gap-1 h-[26px] cursor-target items-center w-[240px] rounded-md  bg-[rgba(255,255,255,0.05)]  border border-[#BBBBBA] px-2 ">
           <input
             autoFocus
             value={value}
@@ -49,7 +49,7 @@ export const AccessStep: React.FC<AccessStepProps> = ({
             placeholder="Enter value"
           />
           {value.length > 0 ? (
-            <span onClick={onCommit}>
+            <span onClick={onCommit} className="cursor-target">
               <svg
                 width="11"
                 height="12"
@@ -64,7 +64,7 @@ export const AccessStep: React.FC<AccessStepProps> = ({
               </svg>
             </span>
           ) : (
-            <span onClick={onCancel}>
+            <span onClick={onCancel} className="cursor-target">
               <svg
                 width="13"
                 height="14"

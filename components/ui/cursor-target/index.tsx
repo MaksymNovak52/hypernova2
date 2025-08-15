@@ -1,5 +1,11 @@
 import { gsap } from "gsap";
-import React, { useCallback, useEffect, useMemo, useRef } from "react";
+import React, {
+  MutableRefObject,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+} from "react";
 import "./TargetCursor.css";
 
 export interface TargetCursorProps {
@@ -15,7 +21,9 @@ export const TargetCursor: React.FC<TargetCursorProps> = ({
 }) => {
   const cursorRef = useRef<HTMLDivElement>(null);
   const cornersRef = useRef<HTMLDivElement[]>([]);
-  const spinTl = useRef<gsap.core.Timeline>(null);
+  const spinTl = useRef<gsap.core.Timeline | null>(
+    null
+  ) as MutableRefObject<gsap.core.Timeline | null>;
   const dotRef = useRef<HTMLDivElement>(null);
   const constants = useMemo(
     () => ({

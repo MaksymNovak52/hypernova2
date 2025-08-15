@@ -11,7 +11,7 @@ export const StatusButton: React.FC<StatusButtonProps> = ({
 }) => (
   <span
     onClick={onClick}
-    className={`gap-2 border border-[#4D4D4D] text-xs w-[85px] h-[26px] cursor-pointer rounded-lg flex items-center justify-center transition-all transform hover:scale-105 ease-in-out ${
+    className={`gap-2 border cursor-target border-[#4D4D4D] text-xs w-[85px] h-[26px] cursor-pointer rounded-lg flex items-center justify-center transition-all transform hover:scale-105 ease-in-out ${
       status === "Connected"
         ? "bg-gradient-to-r from-[#FFF] to-[#BBBBBA] text-[#080605]"
         : "bg-[rgba(255,255,255,0.05)] text-[#BBBBBA]"
