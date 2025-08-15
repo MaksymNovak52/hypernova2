@@ -3,8 +3,6 @@ import { ScrambleTextPlugin } from "gsap/ScrambleTextPlugin";
 import { SplitText } from "gsap/SplitText";
 import React, { useEffect, useRef } from "react";
 
-import "./ScrambledText.css";
-
 gsap.registerPlugin(SplitText, ScrambleTextPlugin);
 
 export interface ScrambledTextProps {
@@ -32,19 +30,23 @@ export const ScrambledText: React.FC<ScrambledTextProps> = ({
   useEffect(() => {
     if (!rootRef.current) return;
 
+    // Split the text into characters
     const split = SplitText.create(rootRef.current.querySelector("div"), {
       type: "chars",
       charsClass: "char",
     });
     charsRef.current = split.chars as HTMLElement[];
 
+    // Set up the GSAP properties for the chars
     charsRef.current.forEach((c) => {
       gsap.set(c, {
         display: "inline-block",
+        /* --- Змінено: видалено жорстке кодування шрифту, щоб він успадковувався --- */
         attr: { "data-content": c.innerHTML },
       });
     });
 
+    // Handle mouse movement to scramble text
     const handleMove = (e: PointerEvent) => {
       charsRef.current.forEach((c) => {
         const { left, top, width, height } = c.getBoundingClientRect();
@@ -77,7 +79,7 @@ export const ScrambledText: React.FC<ScrambledTextProps> = ({
   }, [radius, duration, speed, scrambleChars]);
 
   return (
-    <div ref={rootRef} className={`text-block ${className}`} style={style}>
+    <div ref={rootRef} className={` ${className}   `} style={style}>
       <div>{children}</div>
     </div>
   );
