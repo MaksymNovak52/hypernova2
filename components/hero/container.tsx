@@ -7,7 +7,7 @@ import { PixelTrailWithOverlay } from "../ui/trail-ovetlay";
 import { HeroDescription } from "./description";
 import { AsciiCanvas } from "./new-ascii";
 import { SocialContainer } from "./social";
-export function HeroContainer({
+export default function HeroContainer({
   onAsciiReady,
   onLaunch,
 }: {

@@ -1,7 +1,6 @@
 "use client";
 import {
   HeaderContainer,
-  HeroContainer,
   LightBeam,
   LoaderOverlay,
   StarField,
@@ -15,6 +14,7 @@ import { Scene } from "three";
 const ModalContainer = dynamic(
   () => import("@/components/hero/modal/container")
 );
+const HeroContainer = dynamic(() => import("@/components/hero/container"));
 
 export default function HypernovaLandingPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
