@@ -1,7 +1,7 @@
 import BgImage from "@/assets/bckg.svg";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
-import { memo, useEffect, useState } from "react";
+import { memo, useEffect, useMemo, useState } from "react";
 import { LogoLottie } from "../ui/logo-lottie";
 
 type LoaderPhase = "logo" | "zoomIn" | "end";
@@ -14,7 +14,7 @@ type LoaderOverlayProps = {
   phase?: LoaderPhase;
 };
 
-export function Load({
+function Load({
   logoDisplayMs = 1800,
   zoomTransitionMs = 400,
   scaleTransitionMs = 600,
@@ -26,7 +26,12 @@ export function Load({
   const [startBgScaling, setStartBgScaling] = useState(false);
   const [isLogoVisible, setIsLogoVisible] = useState(true);
   const [isImageVisible, setIsImageVisible] = useState(false);
-  const [bgAnimationDuration, setBgAnimationDuration] = useState(0);
+
+  // Memoize the background animation duration to avoid unnecessary re-calculations
+  const bgAnimationDuration = useMemo(
+    () => (zoomTransitionMs + scaleTransitionMs) / 1000,
+    [zoomTransitionMs, scaleTransitionMs]
+  );
 
   useEffect(() => {
     let phaseTimer: NodeJS.Timeout;
@@ -44,8 +49,6 @@ export function Load({
       }, 100);
 
       const totalBgDuration = (zoomTransitionMs + scaleTransitionMs) / 1000;
-      setBgAnimationDuration(totalBgDuration);
-
       phaseTimer = setTimeout(() => {
         setIsLoaderVisible(false);
         onComplete?.();
@@ -55,8 +58,7 @@ export function Load({
     return () => {
       clearTimeout(phaseTimer);
     };
-  }, [phase, logoDisplayMs, zoomTransitionMs, scaleTransitionMs, onComplete]);
-  console.log("zoomTransitionMs / 1000", bgAnimationDuration);
+  }, [phase, logoDisplayMs, zoomTransitionMs, scaleTransitionMs]);
 
   return (
     <AnimatePresence>
@@ -78,7 +80,7 @@ export function Load({
                 <motion.div
                   className="absolute inset-0"
                   initial={{ scale: 1 }}
-                  animate={startBgScaling ? { scale: 450 } : { scale: 1 }}
+                  animate={startBgScaling ? { scale: 550 } : { scale: 1 }}
                   transition={{
                     duration: 1.5,
                     ease: [0.77, 0, 0.18, 1],

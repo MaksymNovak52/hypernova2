@@ -96,17 +96,7 @@ export function AsciiCanvas({
 
       sceneRef.current = null;
     };
-  }, [
-    containerId,
-    memoizedCallback,
-    scale,
-    memoizedPosition,
-    memoizedRotation,
-    memoizedPivotRotation,
-    rotationSpeed,
-    usePortal,
-    className,
-  ]);
+  }, []);
 
   if (usePortal) {
     return null;
