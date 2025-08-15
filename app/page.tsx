@@ -101,6 +101,7 @@ export default function HypernovaLandingPage() {
         )}
 
         <HeaderContainer onLaunch={openModal} />
+
         <HeroContainer onAsciiReady={markStepLoaded} onLaunch={openModal} />
 
         {isModalOpen && (
