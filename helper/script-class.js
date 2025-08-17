@@ -344,12 +344,12 @@ class AsciiScene {
         
           if (hasContent) {
               ${blurCode}
-              sceneRGB = mix(originalSceneRGB, blurRGB, isMobile > 0.5 ? 0.5 : 0.6); 
+              sceneRGB = mix(originalSceneRGB, blurRGB, isMobile > 0.5 ? 0.5 : 0.6)
           }
         
           if (hasContent) {
               float noiseMask = rand(cell + vec2(time * 0.05, time * 0.08));
-              if (noiseMask < (isMobile > 0.5 ? 0.03 : 0.1)) { 
+              if (noiseMask < (isMobile > 0.5 ? 0.03 : 0.1)) {
                   gl_FragColor = vec4(0.0, 0.0, 0.0, 0.0); 
                   return;
               }
