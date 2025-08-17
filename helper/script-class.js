@@ -59,7 +59,7 @@ class AsciiScene {
     if (this.isMobile) {
       return {
         pixelRatio: Math.min(window.devicePixelRatio, 2.5),
-        cellSize: 7.0,
+        cellSize: 6.5,
         blurSamples: 4,
         animationFrameSkip: 1,
         simplifiedShader: false,
@@ -91,7 +91,7 @@ class AsciiScene {
 
     this.renderer = new THREE.WebGLRenderer({
       antialias: !this.isMobile,
-      powerPreference: this.isMobile ? "low-power" : "high-performance",
+      powerPreference: "high-performance",
     });
     this.renderer.setPixelRatio(this.performanceSettings.pixelRatio);
     this.renderer.setSize(window.innerWidth, window.innerHeight);
@@ -317,11 +317,11 @@ class AsciiScene {
           vec2 cellCenter = baseCenter + repel;
         
           if (isMobile < 0.5) {
-            float noise = rand(cell + vec2(time * 0.01, time * 0.15));
+            float noise = rand(cell + vec2(time * 0.008, time * 0.12));
             float drift = time * 20.0;
             vec2 smokeOffset = vec2(
-                sin(time * 8.0 + cell.y * 0.3) * 0.8,
-                -(drift + noise * 50.0) * 0.3
+                sin(time * 6.0 + cell.y * 0.25) * 0.6,
+                -(drift + noise * 40.0) * 0.25
             );
             cellCenter += smokeOffset;
           } else {
@@ -344,12 +344,12 @@ class AsciiScene {
         
           if (hasContent) {
               ${blurCode}
-              sceneRGB = mix(originalSceneRGB, blurRGB, isMobile > 0.5 ? 0.5 : 0.6)
+              sceneRGB = mix(originalSceneRGB, blurRGB, isMobile > 0.5 ? 0.5 : 0.6); 
           }
         
           if (hasContent) {
               float noiseMask = rand(cell + vec2(time * 0.05, time * 0.08));
-              if (noiseMask < (isMobile > 0.5 ? 0.03 : 0.1)) {
+              if (noiseMask < (isMobile > 0.5 ? 0.03 : 0.1)) { 
                   gl_FragColor = vec4(0.0, 0.0, 0.0, 0.0); 
                   return;
               }
