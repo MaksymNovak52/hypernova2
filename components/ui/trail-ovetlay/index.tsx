@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { DotBadge } from "../dot-badge";
 import StarBorder from "../star-btn";
 
@@ -26,30 +27,44 @@ export function PixelTrailWithOverlay({
   isHover = false,
   onClick = () => {},
 }) {
+  const [isHovered, setIsHovered] = useState(false);
+
+  const dotBadge = (
+    <DotBadge
+      onClick={onClick}
+      isShadow={isShadow}
+      circleSize={circleSize}
+      circleColor={circleColor}
+      backgroundColor={backgroundColor}
+      textColor={textColor}
+      label={label}
+      width={width}
+      fontSize={fontSize}
+      lineHeight={lineHeight}
+      height={height}
+      borderStyle={borderStyle}
+      isHover={isHover}
+    />
+  );
+
   return (
-    <div style={{ position: "relative" }}>
-      <StarBorder
-        as="button"
-        className={starBorderClassName}
-        color={starBorderColor}
-        speed={starBorderSpeed}
-      >
-        <DotBadge
-          onClick={onClick}
-          isShadow={isShadow}
-          circleSize={circleSize}
-          circleColor={circleColor}
-          backgroundColor={backgroundColor}
-          textColor={textColor}
-          label={label}
-          width={width}
-          fontSize={fontSize}
-          lineHeight={lineHeight}
-          height={height}
-          borderStyle={borderStyle}
-          isHover={isHover}
-        />
-      </StarBorder>
+    <div
+      style={{ position: "relative" }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {isHovered ? (
+        <StarBorder
+          as="button"
+          className={starBorderClassName}
+          color={starBorderColor}
+          speed={starBorderSpeed}
+        >
+          {dotBadge}
+        </StarBorder>
+      ) : (
+        dotBadge
+      )}
     </div>
   );
 }

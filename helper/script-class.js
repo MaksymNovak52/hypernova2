@@ -24,7 +24,7 @@ class AsciiScene {
         : { x: 6, y: 2, z: 0 },
       rotation: { x: 0.45, y: 0, z: -0.5 },
       pivotRotation: { x: -0.05, y: 0, z: 0 },
-      rotationSpeed: this.isMobile ? 0.005 : 0.008,
+      rotationSpeed: this.isMobile ? 0.002 : 0.003,
     };
 
     this.options = { ...defaults, ...options };
@@ -58,12 +58,12 @@ class AsciiScene {
   _getPerformanceSettings() {
     if (this.isMobile) {
       return {
-        pixelRatio: Math.min(window.devicePixelRatio, 2),
-        cellSize: 8.0,
-        blurSamples: 3,
-        animationFrameSkip: 2,
-        simplifiedShader: true,
-        reducedLighting: true,
+        pixelRatio: Math.min(window.devicePixelRatio, 2.5),
+        cellSize: 7.0,
+        blurSamples: 4,
+        animationFrameSkip: 1,
+        simplifiedShader: false,
+        reducedLighting: false,
       };
     } else {
       return {
@@ -116,14 +116,23 @@ class AsciiScene {
       dir1.position.set(-25, 5, 40);
       this.scene.add(dir1);
     } else {
-      const ambient = new THREE.AmbientLight(0xffffff, 0.985);
+      const ambient = new THREE.AmbientLight(
+        0xffffff,
+        this.isMobile ? 1.1 : 0.985
+      );
       this.scene.add(ambient);
 
-      const dir1 = new THREE.DirectionalLight(0xffffff, 1.3);
+      const dir1 = new THREE.DirectionalLight(
+        0xffffff,
+        this.isMobile ? 1.5 : 1.3
+      );
       dir1.position.set(-25, 5, 40);
       this.scene.add(dir1);
 
-      const dir2 = new THREE.DirectionalLight(0xffffff, 2.5);
+      const dir2 = new THREE.DirectionalLight(
+        0xffffff,
+        this.isMobile ? 2.8 : 2.5
+      );
       dir2.position.set(0, 55, 0);
       this.scene.add(dir2);
     }
@@ -138,7 +147,8 @@ class AsciiScene {
         if (child.isMesh) {
           child.material = new THREE.MeshStandardMaterial({
             color: 0xffffff,
-            roughness: this.isMobile ? 0.3 : 0.15,
+            roughness: this.isMobile ? 0.2 : 0.15,
+            metalness: this.isMobile ? 0.1 : 0.0,
           });
 
           if (this.isMobile) {
@@ -315,9 +325,11 @@ class AsciiScene {
             );
             cellCenter += smokeOffset;
           } else {
+            float noise = rand(cell + vec2(time * 0.008, time * 0.12));
+            float drift = time * 15.0;
             vec2 smokeOffset = vec2(
-                sin(time * 4.0 + cell.y * 0.2) * 0.4,
-                -time * 10.0 * 0.2
+                sin(time * 6.0 + cell.y * 0.25) * 0.6,
+                -(drift + noise * 40.0) * 0.25
             );
             cellCenter += smokeOffset;
           }
@@ -332,12 +344,12 @@ class AsciiScene {
         
           if (hasContent) {
               ${blurCode}
-              sceneRGB = mix(originalSceneRGB, blurRGB, isMobile > 0.5 ? 0.4 : 0.6);
+              sceneRGB = mix(originalSceneRGB, blurRGB, isMobile > 0.5 ? 0.5 : 0.6); 
           }
         
           if (hasContent) {
               float noiseMask = rand(cell + vec2(time * 0.05, time * 0.08));
-              if (noiseMask < (isMobile > 0.5 ? 0.05 : 0.1)) {
+              if (noiseMask < (isMobile > 0.5 ? 0.03 : 0.1)) { 
                   gl_FragColor = vec4(0.0, 0.0, 0.0, 0.0); 
                   return;
               }

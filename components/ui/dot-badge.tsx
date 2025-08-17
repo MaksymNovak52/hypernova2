@@ -17,6 +17,7 @@ type DotBadgeProps = {
   isHover?: boolean;
   glowIntensity?: number;
   onClick?: () => void;
+  showSwapX?: number;
 };
 
 export function DotBadge({
@@ -34,6 +35,7 @@ export function DotBadge({
   borderStyle = "1px solid black",
   isHover = false,
   glowIntensity = 100,
+  showSwapX = 80,
 }: DotBadgeProps) {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -78,11 +80,6 @@ export function DotBadge({
     (backgroundColor.startsWith("linear-gradient") ||
       backgroundColor.startsWith("radial-gradient"));
 
-  const glowBase = extractFirstStop(backgroundColor);
-  const intensity = Math.min(Math.max(glowIntensity, 0), 100) / 100;
-  const glowColor = getRgbaFromColor(glowBase, 0.8);
-  const glowColorLight = getRgbaFromColor(glowBase, 0.35);
-
   const baseInset = isShadow
     ? "0 -3px 4px rgba(255, 255, 255, 0.1) inset, -5px -5px 250px rgba(255, 255, 255, 0.02) inset"
     : "none";
@@ -120,17 +117,13 @@ export function DotBadge({
             exit={{ opacity: 0, scale: 0.8 }}
             transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
             className="pointer-events-none absolute -inset-2 -z-10 rounded-[14px] blur-md h"
-            style={{
-              background: `radial-gradient(60% 60% at 50% 50%, ${glowColor} 0%, ${glowColorLight} 35%, rgba(0,0,0,0) 70%)`,
-              filter: `drop-shadow(0 0 ${40 * intensity}px ${glowColorLight})`,
-            }}
           />
         )}
       </AnimatePresence>
 
       <motion.span
         layout
-        animate={shouldSwap ? { x: 80 } : { x: 0 }}
+        animate={shouldSwap ? { x: showSwapX || 80 } : { x: 0 }}
         transition={{ duration: 0.8, ease: [0.25, 1, 0.5, 1] }}
         style={{
           width: circleSize,

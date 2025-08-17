@@ -90,7 +90,7 @@ export default function HeroContainer({
                   height={36}
                   isHover
                   fontSize={14}
-                  label="Launch App"
+                  label="Register"
                   isShadow={true}
                   circleSize={8}
                   circleColor="#080605"

@@ -38,7 +38,9 @@ export function EmailContent({
       <div className="mt-4">
         <span className="text-[#BBBBBA] text-[10px]">
           Already signed-up?{" "}
-          <span className="text-white">Check your spot in the queue</span>
+          <span className="text-white cursor-target">
+            Check your spot in the queue
+          </span>
         </span>
       </div>
       {/* <Divider /> */}

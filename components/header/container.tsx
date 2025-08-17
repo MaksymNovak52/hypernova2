@@ -1,7 +1,10 @@
+import { useState } from "react";
 import { DotBadge, UnderLineText } from "../ui";
 import { LogoLottie } from "../ui/logo-lottie";
 
 export function HeaderContainer({ onLaunch }: { onLaunch: () => void }) {
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
     <header className="absolute top-0 left-0  w-full flex items-center justify-center z-10 h-[57px] pt-[30px] z-10000">
       <section className="flex flex-row items-center justify-end sm:justify-between sm:w-[96%] w-[1340px] py-2 rounded-full relative ">
@@ -23,14 +26,19 @@ export function HeaderContainer({ onLaunch }: { onLaunch: () => void }) {
             About Us
           </UnderLineText>
 
-          <div className="pb-2 ">
+          <div
+            className="pb-2"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+          >
             <DotBadge
               borderStyle="none"
               width={130}
               height={36}
               isHover
+              showSwapX={50}
               fontSize={14}
-              label="Launch App"
+              label={isHovered ? "Soon" : "Launch App"}
               isShadow={true}
               circleSize={8}
               circleColor="#080605"
