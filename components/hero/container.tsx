@@ -70,7 +70,7 @@ export default function HeroContainer({
                 Your Gateway to Funded Trading
               </h4>
             </ScrambledText>
-            <div className="flex flex-row justify-center items-center gap-[15px] z-1000000">
+            <div className="flex flex-row justify-center items-center gap-[15px]   h-[40px] z-1000000">
               <PixelTrailWithOverlay
                 width={130}
                 height={36}
@@ -83,14 +83,14 @@ export default function HeroContainer({
                 borderStyle=" 1px solid #494848"
               />
 
-              <div className="pb-2">
+              <div className="">
                 <DotBadge
                   borderStyle="none"
                   width={130}
                   height={36}
                   isHover
                   fontSize={14}
-                  label="Register"
+                  label="Launch App"
                   isShadow={true}
                   circleSize={8}
                   circleColor="#080605"
