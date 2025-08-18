@@ -38,6 +38,7 @@ export function DotBadge({
   showSwapX = 80,
 }: DotBadgeProps) {
   const [isHovered, setIsHovered] = useState(false);
+  const [scrambled, setScrambled] = useState(false);
 
   const getRgbaFromColor = (color: string, alpha: number = 1) => {
     if (color.startsWith("#")) {
@@ -86,6 +87,31 @@ export function DotBadge({
 
   const shouldSwap = isHover && isHovered;
 
+  // Function to scramble the text
+  const scrambleText = (text: string) => {
+    if (scrambled) {
+      return text.split("").map((char, index) => (
+        <motion.span
+          key={index}
+          animate={{
+            x: [Math.random() * 10 - 5, 0],
+            y: [Math.random() * 10 - 5, 0],
+            opacity: [0, 1],
+          }}
+          transition={{
+            duration: 0.3,
+            repeat: 2,
+            repeatType: "reverse",
+            delay: index * 0.1,
+          }}
+        >
+          {char}
+        </motion.span>
+      ));
+    }
+    return text;
+  };
+
   return (
     <motion.button
       onClick={onClick}
@@ -108,6 +134,8 @@ export function DotBadge({
       }}
       whileHover={isHover ? { scale: 1.02 } : {}}
       transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
+      onMouseEnter={() => setScrambled(true)}
+      onMouseLeave={() => setScrambled(false)}
     >
       <AnimatePresence>
         {isHover && isHovered && (
@@ -141,7 +169,7 @@ export function DotBadge({
         transition={{ duration: 0.8, ease: [0.25, 1, 0.5, 1] }}
         className={typeof label !== "string" ? "mr-2" : undefined}
       >
-        {label}
+        {typeof label === "string" ? scrambleText(label) : label}
       </motion.span>
     </motion.button>
   );
