@@ -62,7 +62,7 @@ export default function HeroContainer({
 
             <ScrambledText>
               <h4
-                className="text-[32px] md:text-6xl font-[var(--font-anonymous-pro)]  leading-[0.8]  max-w-[600px] line-clamp-2"
+                className="text-[32px] md:text-6xl font-[var(--font-anonymous-pro)]  leading-[0.8] mt-[10px] mb- 10 max-w-[600px] line-clamp-2"
                 style={{
                   color: "rgba(228 228 228 / 100%)",
                 }}
