@@ -153,8 +153,8 @@ export function DotBadge({
         )}
       </AnimatePresence>
 
+      {/* Кружечок */}
       <motion.span
-        layout
         animate={shouldSwap ? { x: showSwapX || 80 } : { x: 0 }}
         transition={{ duration: 0.8, ease: [0.25, 1, 0.5, 1] }}
         style={{
@@ -164,14 +164,20 @@ export function DotBadge({
           borderRadius: "9999px",
           lineHeight,
           flex: "0 0 auto",
+          transformOrigin: "center",
         }}
       />
 
       <motion.span
-        layout
         animate={shouldSwap ? { x: -20 } : { x: 0 }}
         transition={{ duration: 0.8, ease: [0.25, 1, 0.5, 1] }}
         className={!isHover ? "mr-2" : undefined}
+        style={{
+          transformOrigin: "center",
+          display: "inline-block",
+          minWidth: "fit-content",
+          whiteSpace: "nowrap",
+        }}
       >
         {typeof label === "string" ? scrambleText(label) : label}
       </motion.span>
