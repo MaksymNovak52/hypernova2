@@ -40,16 +40,14 @@ export const ScrambledText: React.FC<ScrambledTextProps> = ({
       gsap.set(c, {
         display: "inline-block",
         attr: { "data-content": c.innerHTML },
-        // Preserve vertical alignment and spacing
         verticalAlign: "top",
       });
     });
 
-    // Force line-height after split
     const container = rootRef.current.querySelector("div");
     if (container) {
       gsap.set(container, {
-        lineHeight: "0.1", // або будь-яке значення, яке вам потрібно
+        lineHeight: "0.1",
         display: "block",
       });
     }
@@ -87,12 +85,10 @@ export const ScrambledText: React.FC<ScrambledTextProps> = ({
 
   return (
     <div ref={rootRef} className={`${className}`} style={style}>
-      {/* Apply line-height directly to the container that will be split */}
       <div
         className="inline-block"
         style={{
           lineHeight: "inherit",
-          // Force the line height to be respected
           display: "block",
         }}
       >

@@ -38,7 +38,6 @@ export function DotBadge({
   showSwapX = 80,
 }: DotBadgeProps) {
   const [isHovered, setIsHovered] = useState(false);
-  const [scrambled, setScrambled] = useState(false);
 
   const getRgbaFromColor = (color: string, alpha: number = 1) => {
     if (color.startsWith("#")) {
@@ -87,9 +86,8 @@ export function DotBadge({
 
   const shouldSwap = isHover && isHovered;
 
-  // Function to scramble the text
   const scrambleText = (text: string) => {
-    if (scrambled) {
+    if (isHovered) {
       return text.split("").map((char, index) => (
         <motion.span
           key={index}
@@ -112,14 +110,22 @@ export function DotBadge({
     return text;
   };
 
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
+
   return (
     <motion.button
       onClick={onClick}
-      onHoverStart={() => setIsHovered(true)}
-      onHoverEnd={() => setIsHovered(false)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       className={clsx(
         `relative rounded-[12px] border flex items-center gap-2 justify-center overflow-hidden cursor-target ${
-          isHover && "hover:animate-glow-hero"
+          isHover && isHovered && "hover:animate-glow-hero"
         }`
       )}
       style={{
@@ -134,8 +140,6 @@ export function DotBadge({
       }}
       whileHover={isHover ? { scale: 1.02 } : {}}
       transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
-      onMouseEnter={() => setScrambled(true)}
-      onMouseLeave={() => setScrambled(false)}
     >
       <AnimatePresence>
         {isHover && isHovered && (
@@ -144,7 +148,7 @@ export function DotBadge({
             animate={{ opacity: 1, scale: 1.1 }}
             exit={{ opacity: 0, scale: 0.8 }}
             transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
-            className="pointer-events-none absolute -inset-2 -z-10 rounded-[14px] blur-md h"
+            className="pointer-events-none absolute -inset-2 -z-10 rounded-[14px] blur-md"
           />
         )}
       </AnimatePresence>
@@ -167,7 +171,7 @@ export function DotBadge({
         layout
         animate={shouldSwap ? { x: -20 } : { x: 0 }}
         transition={{ duration: 0.8, ease: [0.25, 1, 0.5, 1] }}
-        className={typeof label !== "string" ? "mr-2" : undefined}
+        className={!isHover ? "mr-2" : undefined}
       >
         {typeof label === "string" ? scrambleText(label) : label}
       </motion.span>

@@ -27,7 +27,7 @@ export function HeaderContainer({ onLaunch }: { onLaunch: () => void }) {
           </UnderLineText>
 
           <div
-            className="pb-2"
+            className=""
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
           >

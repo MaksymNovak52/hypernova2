@@ -49,11 +49,25 @@ export function PixelTrailWithOverlay({
 
   return (
     <div
-      style={{ position: "relative" }}
+      style={{
+        position: "relative",
+        width: width,
+        height: height,
+      }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {isHovered ? (
+      <div
+        style={{
+          position: "absolute",
+          top: "-8px",
+          left: "-1px",
+          width: "100%",
+          height: "100%",
+          opacity: isHovered ? 1 : 0,
+          transition: "opacity 0s ease-in-out",
+        }}
+      >
         <StarBorder
           as="button"
           className={starBorderClassName}
@@ -62,11 +76,23 @@ export function PixelTrailWithOverlay({
         >
           {dotBadge}
         </StarBorder>
-      ) : (
-        <div style={{ position: "relative" }} className="1">
-          {dotBadge}
-        </div>
-      )}
+      </div>
+
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          opacity: isHovered ? 0 : 1,
+
+          transition: "opacity 0s ease-in-out",
+        }}
+        className="mb-[1px] "
+      >
+        {dotBadge}
+      </div>
     </div>
   );
 }
