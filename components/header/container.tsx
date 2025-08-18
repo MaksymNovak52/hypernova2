@@ -44,7 +44,6 @@ export function HeaderContainer({ onLaunch }: { onLaunch: () => void }) {
               circleColor="#080605"
               backgroundColor="white"
               textColor="#080605"
-              onClick={onLaunch}
             />{" "}
           </div>
         </div>
