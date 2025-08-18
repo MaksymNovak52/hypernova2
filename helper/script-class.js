@@ -14,7 +14,7 @@ class AsciiScene {
 
     this.isMobile = this._detectMobile();
 
-    const mobileScale = 0.7;
+    const mobileScale = 0.85;
 
     const defaults = {
       callback: () => {},
@@ -24,7 +24,7 @@ class AsciiScene {
         : { x: 6, y: 2, z: 0 },
       rotation: { x: 0.45, y: 0, z: -0.5 },
       pivotRotation: { x: -0.05, y: 0, z: 0 },
-      rotationSpeed: this.isMobile ? 0.002 : 0.003,
+      rotationSpeed: this.isMobile ? 0.0025 : 0.003,
     };
 
     this.options = { ...defaults, ...options };
@@ -58,19 +58,19 @@ class AsciiScene {
   _getPerformanceSettings() {
     if (this.isMobile) {
       return {
-        pixelRatio: Math.min(window.devicePixelRatio, 2.5),
-        cellSize: 6.5,
-        blurSamples: 4,
-        animationFrameSkip: 1,
+        pixelRatio: Math.min(window.devicePixelRatio, 2),
+        cellSize: 5.5,
+        blurSamples: 6,
+        animationFrameSkip: 0,
         simplifiedShader: false,
         reducedLighting: false,
       };
     } else {
       return {
-        pixelRatio: Math.min(window.devicePixelRatio, 4),
+        pixelRatio: Math.min(window.devicePixelRatio, 3.5),
         cellSize: 6.5,
         blurSamples: 5,
-        animationFrameSkip: 1,
+        animationFrameSkip: 0,
         simplifiedShader: false,
         reducedLighting: false,
       };
@@ -90,8 +90,9 @@ class AsciiScene {
     this.camera.position.set(0, 0, 50);
 
     this.renderer = new THREE.WebGLRenderer({
-      antialias: !this.isMobile,
+      antialias: true,
       powerPreference: "high-performance",
+      alpha: true,
     });
     this.renderer.setPixelRatio(this.performanceSettings.pixelRatio);
     this.renderer.setSize(window.innerWidth, window.innerHeight);
@@ -108,33 +109,30 @@ class AsciiScene {
   }
 
   _initLights() {
-    if (this.performanceSettings.reducedLighting) {
-      const ambient = new THREE.AmbientLight(0xffffff, 1.2);
-      this.scene.add(ambient);
+    const ambient = new THREE.AmbientLight(
+      0xffffff,
+      this.isMobile ? 1.2 : 0.985
+    );
+    this.scene.add(ambient);
 
-      const dir1 = new THREE.DirectionalLight(0xffffff, 1.0);
-      dir1.position.set(-25, 5, 40);
-      this.scene.add(dir1);
-    } else {
-      const ambient = new THREE.AmbientLight(
-        0xffffff,
-        this.isMobile ? 1.1 : 0.985
-      );
-      this.scene.add(ambient);
+    const dir1 = new THREE.DirectionalLight(
+      0xffffff,
+      this.isMobile ? 1.8 : 1.3
+    );
+    dir1.position.set(-25, 5, 40);
+    this.scene.add(dir1);
 
-      const dir1 = new THREE.DirectionalLight(
-        0xffffff,
-        this.isMobile ? 1.5 : 1.3
-      );
-      dir1.position.set(-25, 5, 40);
-      this.scene.add(dir1);
+    const dir2 = new THREE.DirectionalLight(
+      0xffffff,
+      this.isMobile ? 3.2 : 2.5
+    );
+    dir2.position.set(0, 55, 0);
+    this.scene.add(dir2);
 
-      const dir2 = new THREE.DirectionalLight(
-        0xffffff,
-        this.isMobile ? 2.8 : 2.5
-      );
-      dir2.position.set(0, 55, 0);
-      this.scene.add(dir2);
+    if (this.isMobile) {
+      const dir3 = new THREE.DirectionalLight(0xffffff, 0.8);
+      dir3.position.set(25, -5, -40);
+      this.scene.add(dir3);
     }
   }
 
@@ -147,12 +145,12 @@ class AsciiScene {
         if (child.isMesh) {
           child.material = new THREE.MeshStandardMaterial({
             color: 0xffffff,
-            roughness: this.isMobile ? 0.2 : 0.15,
-            metalness: this.isMobile ? 0.1 : 0.0,
+            roughness: this.isMobile ? 0.1 : 0.15,
+            metalness: this.isMobile ? 0.05 : 0.0,
           });
 
           if (this.isMobile) {
-            child.material.precision = "mediump";
+            child.material.precision = "highp";
             child.frustumCulled = true;
           }
         }
@@ -212,43 +210,23 @@ class AsciiScene {
   }
 
   _getAsciiShader(fontTexture) {
-    const blurSamples = this.performanceSettings.blurSamples;
-    const simplifiedShader = this.performanceSettings.simplifiedShader;
-
-    let blurCode = "";
-    if (simplifiedShader) {
-      blurCode = `
-        vec3 blurRGB = vec3(0.0);
-        float blurSize = 10.0 / resolution.x;
-        int samples = 0;
-        
-        for (int x = -1; x <= 1; x++) {
-            for (int y = -1; y <= 1; y++) {
-                vec2 offset = vec2(x, y) * blurSize;
-                vec3 sampleColor = texture2D(tDiffuse, sampleUV + offset).rgb;
-                blurRGB += sampleColor;
-                samples++;
-            }
-        }
-        blurRGB /= float(samples);
-      `;
-    } else {
-      blurCode = `
-        vec3 blurRGB = vec3(0.0);
-        float blurSize = 20.0 / resolution.x;
-        int samples = 5;
-        
-        for (int x = -2; x <= 2; x++) {
-            for (int y = -2; y <= 2; y++) {
-                vec2 offset = vec2(x, y) * blurSize;
-                vec3 sampleColor = texture2D(tDiffuse, sampleUV + offset).rgb;
-                blurRGB += sampleColor;
-                samples++;
-            }
-        }
-        blurRGB /= float(samples);
-      `;
-    }
+    const blurCode = `
+      vec3 blurRGB = vec3(0.0);
+      float blurSize = ${this.isMobile ? "15.0" : "20.0"} / resolution.x;
+      int samples = 0;
+      
+      int maxSamples = ${this.isMobile ? "3" : "2"};
+      
+      for (int x = -maxSamples; x <= maxSamples; x++) {
+          for (int y = -maxSamples; y <= maxSamples; y++) {
+              vec2 offset = vec2(x, y) * blurSize;
+              vec3 sampleColor = texture2D(tDiffuse, sampleUV + offset).rgb;
+              blurRGB += sampleColor;
+              samples++;
+          }
+      }
+      blurRGB /= float(samples);
+    `;
 
     return {
       uniforms: {
@@ -262,7 +240,7 @@ class AsciiScene {
         time: { value: 0.0 },
         charCount: { value: this.CHAR_COUNT },
         pad: { value: 0.195 },
-        invGamma: { value: 2 },
+        invGamma: { value: this.isMobile ? 1.8 : 2 },
         isMobile: { value: this.isMobile ? 1.0 : 0.0 },
       },
       vertexShader: `
@@ -273,7 +251,7 @@ class AsciiScene {
         }
       `,
       fragmentShader: `
-        precision ${this.isMobile ? "mediump" : "highp"} float;
+        precision ${this.isMobile ? "highp" : "highp"} float;
         
         uniform sampler2D tDiffuse;
         uniform sampler2D fontTexture;
@@ -301,8 +279,8 @@ class AsciiScene {
           vec2 cell = floor(pixelPos / cellSize);
           vec2 baseCenter = (cell + 0.5) * cellSize;
         
-          float innerRadius = isMobile > 0.5 ? 15.0 : 20.0;
-          float outerRadius = isMobile > 0.5 ? 50.0 : 70.0;
+          float innerRadius = isMobile > 0.5 ? 18.0 : 20.0;
+          float outerRadius = isMobile > 0.5 ? 65.0 : 70.0; 
           vec2 dxy = baseCenter - mouse;
           float dist = length(dxy);
         
@@ -313,26 +291,16 @@ class AsciiScene {
         
           float t = 1.8 - smoothstep(innerRadius, outerRadius, dist);
           vec2 dir = (dist > 1e-5) ? dxy / dist : vec2(0.0);
-          vec2 repel = dir * (t * t) * (isMobile > 0.5 ? 30.0 : 50.0);
+          vec2 repel = dir * (t * t) * (isMobile > 0.5 ? 40.0 : 50.0); 
           vec2 cellCenter = baseCenter + repel;
         
-          if (isMobile < 0.5) {
-            float noise = rand(cell + vec2(time * 0.008, time * 0.12));
-            float drift = time * 20.0;
-            vec2 smokeOffset = vec2(
-                sin(time * 6.0 + cell.y * 0.25) * 0.6,
-                -(drift + noise * 40.0) * 0.25
-            );
-            cellCenter += smokeOffset;
-          } else {
-            float noise = rand(cell + vec2(time * 0.008, time * 0.12));
-            float drift = time * 15.0;
-            vec2 smokeOffset = vec2(
-                sin(time * 6.0 + cell.y * 0.25) * 0.6,
-                -(drift + noise * 40.0) * 0.25
-            );
-            cellCenter += smokeOffset;
-          }
+          float noise = rand(cell + vec2(time * 0.008, time * 0.12));
+          float drift = time * (isMobile > 0.5 ? 18.0 : 20.0);
+          vec2 smokeOffset = vec2(
+              sin(time * 6.0 + cell.y * 0.25) * (isMobile > 0.5 ? 0.7 : 0.6), 
+              -(drift + noise * 40.0) * 0.25
+          );
+          cellCenter += smokeOffset;
         
           vec2 sampleUV = cellCenter / resolution;
           vec3 originalSceneRGB = texture2D(tDiffuse, sampleUV).rgb;
@@ -344,26 +312,26 @@ class AsciiScene {
         
           if (hasContent) {
               ${blurCode}
-              sceneRGB = mix(originalSceneRGB, blurRGB, isMobile > 0.5 ? 0.5 : 0.6); 
+              sceneRGB = mix(originalSceneRGB, blurRGB, isMobile > 0.5 ? 0.4 : 0.6); 
           }
         
           if (hasContent) {
               float noiseMask = rand(cell + vec2(time * 0.05, time * 0.08));
-              if (noiseMask < (isMobile > 0.5 ? 0.03 : 0.1)) { 
+              if (noiseMask < (isMobile > 0.5 ? 0.015 : 0.1)) { 
                   gl_FragColor = vec4(0.0, 0.0, 0.0, 0.0); 
                   return;
               }
           }
         
           float b = brightness(sceneRGB);
-          float darkCutoff = 0.001;
+          float darkCutoff = isMobile > 0.5 ? 0.0005 : 0.001; 
         
           if (!hasContent || b <= darkCutoff) {
               gl_FragColor = vec4(0.0, 0.0, 0.0, 0.0);
               return;
           }
         
-          b = clamp((b - darkCutoff) / (1.0 - darkCutoff), 0.35, 1.0);
+          b = clamp((b - darkCutoff) / (1.0 - darkCutoff), isMobile > 0.5 ? 0.25 : 0.35, 1.0);
           b = pow(b, invGamma);
         
           float idxF = b * float(charCount - 1);
@@ -381,13 +349,15 @@ class AsciiScene {
           vec4 g = texture2D(fontTexture, atlasUV);
         
           float edge = 1.0;
-          float fw = fwidth(g.a) * .55;
+          float fw = fwidth(g.a) * (isMobile > 0.5 ? 0.45 : 0.55); 
           float a = smoothstep(edge - fw, edge + fw, g.a);
         
           vec3 ink = mix(vec3(0.0), vec3(1.0), b);
           float fade = smoothstep(1.0, 0.9, vUv.y);
         
-          gl_FragColor = vec4(ink, a * b * fade);
+          float finalAlpha = a * b * fade * (isMobile > 0.5 ? 1.1 : 1.0);
+        
+          gl_FragColor = vec4(ink, finalAlpha);
         }
       `,
     };
@@ -404,7 +374,7 @@ class AsciiScene {
 
     if (this.isMobile) {
       let mouseTimeout;
-      window.addEventListener("touchmove", (e) => {
+      const handleTouch = (e) => {
         if (mouseTimeout) return;
         mouseTimeout = setTimeout(() => {
           if (e.touches[0]) {
@@ -414,8 +384,11 @@ class AsciiScene {
             });
           }
           mouseTimeout = null;
-        }, 16);
-      });
+        }, 8);
+      };
+
+      window.addEventListener("touchmove", handleTouch);
+      window.addEventListener("touchstart", handleTouch);
     } else {
       window.addEventListener("mousemove", mouseMoveHandler);
     }
@@ -434,14 +407,6 @@ class AsciiScene {
   _animate(time = 0) {
     this.frameCount++;
 
-    if (
-      this.isMobile &&
-      this.frameCount % this.performanceSettings.animationFrameSkip !== 0
-    ) {
-      requestAnimationFrame((t) => this._animate(t));
-      return;
-    }
-
     requestAnimationFrame((t) => this._animate(t));
 
     if (this.model) this.pivot.rotation.y += this.options.rotationSpeed;
@@ -450,7 +415,7 @@ class AsciiScene {
   }
 
   updateScale(scale) {
-    const adjustedScale = this.isMobile ? scale * 0.7 : scale;
+    const adjustedScale = this.isMobile ? scale * 0.85 : scale;
     if (this.model) {
       this.model.scale.set(adjustedScale, adjustedScale, adjustedScale);
     }
@@ -458,8 +423,8 @@ class AsciiScene {
   }
 
   updatePosition(x, y, z) {
-    const adjustedX = this.isMobile ? x * 0.7 : x;
-    const adjustedY = this.isMobile ? y * 0.7 : y;
+    const adjustedX = this.isMobile ? x * 0.85 : x;
+    const adjustedY = this.isMobile ? y * 0.85 : y;
     if (this.containerGroup) {
       this.containerGroup.position.set(adjustedX, adjustedY, z);
     }
@@ -474,7 +439,7 @@ class AsciiScene {
   }
 
   updateRotationSpeed(speed) {
-    this.options.rotationSpeed = this.isMobile ? speed * 0.8 : speed;
+    this.options.rotationSpeed = this.isMobile ? speed * 0.85 : speed;
   }
 
   getPerformanceInfo() {
