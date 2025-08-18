@@ -37,10 +37,7 @@ export function AsciiCanvas({
     [position?.x, position?.y, position?.z]
   );
 
-  const memoizedRotation = useMemo(
-    () => rotation,
-    [rotation?.x, rotation?.y, rotation?.z]
-  );
+  const memoizedRotation = rotation;
 
   const memoizedPivotRotation = useMemo(
     () => pivotRotation,

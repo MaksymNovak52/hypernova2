@@ -38,7 +38,7 @@ export function EmailContent({
       <div className="mt-4">
         <span className="text-[#BBBBBA] text-[10px]">
           Already signed-up?{" "}
-          <span className="text-white cursor-target">
+          <span className="text-white cursor-pointer ">
             Check your spot in the queue
           </span>
         </span>

@@ -8,6 +8,15 @@ const ASCII_ATLAS_IMG = "/16X18ASCII.png";
 const MODEL_GLB = "/hypernova_0005.glb";
 
 class AsciiScene {
+  setScale(scale) {
+    throw new Error("Method not implemented.");
+  }
+  setRotation(rotation) {
+    throw new Error("Method not implemented.");
+  }
+  setPosition(position) {
+    throw new Error("Method not implemented.");
+  }
   constructor(containerId, options = {}) {
     this.container = document.getElementById(containerId);
     this.CHAR_COUNT = 16;
@@ -250,8 +259,8 @@ class AsciiScene {
           vec2 cell = floor(pixelPos / cellSize);
           vec2 baseCenter = (cell + 0.5) * cellSize;
         
-          float innerRadius = 20.0;
-          float outerRadius = 70.0;
+          float innerRadius = 0.0;   
+          float outerRadius = 0.0;  
           vec2 dxy = baseCenter - mouse;
           float dist = length(dxy);
         
@@ -260,9 +269,9 @@ class AsciiScene {
             return;
           }
         
-          float t = 1.8 - smoothstep(innerRadius, outerRadius, dist);
+          float t = 0.3 - smoothstep(innerRadius, outerRadius, dist); 
           vec2 dir = (dist > 1e-5) ? dxy / dist : vec2(0.0);
-          vec2 repel = dir * (t * t) * 50.0;
+          vec2 repel = dir * (t * t) * 0.0; 
           vec2 cellCenter = baseCenter + repel;
         
           float noise = rand(cell + vec2(time * 0.008, time * 0.12));

@@ -2,6 +2,7 @@
   display: inline-block;
   position: relative;
   border-radius: 12px;
+  margin-top: 6px;
   overflow: hidden;
 }
 

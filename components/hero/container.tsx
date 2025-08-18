@@ -40,7 +40,7 @@ export default function HeroContainer({
         `}
       </style>
 
-      <main className="relative z-10 rounded-xl h-[85vh] bg-transparent sm:bg-[#494848]/10 overflow-hidden items-center justify-between text-start max-w-[343px] sm:max-w-[96%] text-[#B7B7B7] mx-auto mt-[72px] sm:mt-[90px]">
+      <main className="relative z-10 rounded-xl h-[85vh] bg-transparent sm:bg-[#494848]/10 overflow-hidden items-center justify-between text-start max-w-[370px] sm:max-w-[96%] text-[#B7B7B7] mx-auto mt-[72px] sm:mt-[90px]">
         <div className="box w-full h-full absolute pointer-events-none"></div>
         <div className="px-4 flex max-h-[600px] sm:h-[85vh] overflow-hidden items-center justify-between text-start max-w-[1340px] text-[#B7B7B7] mx-auto">
           <SocialContainer />

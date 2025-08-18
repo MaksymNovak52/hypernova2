@@ -3,7 +3,7 @@ import { PixelTrailWithOverlay } from "../ui/trail-ovetlay";
 export function SocialContainer() {
   return (
     <section className="absolute sm:bottom-[50px]  bottom-[20px] right-0 sm:right-10   w-full flex flex-col  items-center sm:items-end gap-6 0 sm:max-w-[301px]">
-      <div className="flex flex-row justify-center sm:justify-end items-center  gap-2 w-full    ml-1  ">
+      <div className="flex flex-row justify-center sm:justify-end items-center  h-[30px] gap-2 w-full    ml-1  ">
         <PixelTrailWithOverlay
           isShadow={false}
           width={70}

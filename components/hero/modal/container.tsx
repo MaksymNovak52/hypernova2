@@ -202,16 +202,16 @@ export default function ModalContainer({
                     brand="Hyperliquid"
                     isDimmed={false}
                     responsiveClassName="s"
-                    containerClassName="  z-999999 fixed top-[544px] left-[262px] bg-transparent "
+                    containerClassName="  z-999999 fixed top-[10px] left-[391px] bg-transparent "
                     labelClassName="text-[10px] text-[#BBBBBA]"
                     brandClassName="text-[10px]  text-white"
                     iconClassName="mx-1 text-white/60"
                   />
                   <AsciiCanvas
-                    className="rotate-[-70deg] will-change-transform !top-[120px] [image-rendering:pixelated] [-webkit-font-smoothing:antialiased] [text-rendering:optimizeSpeed]"
-                    scale={16}
-                    position={{ x: -42, y: 7, z: -12 }}
-                    rotation={{ x: -2, y: 0.1, z: -1.8 }}
+                    className="rotate-[1 40deg] !top-[8 0px] !-left-[50 px] "
+                    scale={22}
+                    position={{ x: -59, y: -11, z: -21 }}
+                    rotation={{ x: -3.5, y: -0.1, z: 3 }}
                     pivotRotation={{ x: -0.05, y: 0, z: 1 }}
                     rotationSpeed={0}
                     cellSize={3.2}

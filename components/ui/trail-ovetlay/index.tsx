@@ -63,7 +63,7 @@ export function PixelTrailWithOverlay({
           {dotBadge}
         </StarBorder>
       ) : (
-        <div style={{ position: "relative" }} className="mb-1">
+        <div style={{ position: "relative" }} className="1">
           {dotBadge}
         </div>
       )}

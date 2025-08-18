@@ -6,7 +6,6 @@ import {
   StarField,
 } from "@/components";
 import { BuiltOnBadge } from "@/components/ui";
-import { TargetCursor } from "@/components/ui/cursor-target";
 import { useSceneLoader, useThreeJSBackground } from "@/hooks";
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useState } from "react";
@@ -96,7 +95,6 @@ export default function HypernovaLandingPage() {
             isModalOpen ? "opacity-30" : "opacity-100"
           }`}
         />
-        {!isMobile && !isLoading && <TargetCursor spinDuration={2} />}
 
         <HeaderContainer onLaunch={openModal} />
 
