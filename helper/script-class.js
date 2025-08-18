@@ -207,7 +207,7 @@ class AsciiScene {
         charCount: { value: this.CHAR_COUNT },
         pad: { value: 0.195 },
         invGamma: { value: 2 },
-        isMobile: { value: this.isMobile ? 1.0 : 0.0 },
+        isMobile: { value: 0 },
       },
       vertexShader: `
         varying vec2 vUv;

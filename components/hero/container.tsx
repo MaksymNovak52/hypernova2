@@ -108,7 +108,6 @@ export default function HeroContainer({
             rotation={{ x: 0.6, y: 0.1, z: -0.4 }}
             pivotRotation={{ x: -0.05, y: 0, z: 0 }}
             rotationSpeed={0.01}
-            className="will-change-transform pointer-events-none [image-rendering:pixelated] [-webkit-font-smoothing:antialiased] [text-rendering:optimizeSpeed]"
             cellSize={5.0}
             onReady={() => console.log("Fully configured scene ready!")}
           />
