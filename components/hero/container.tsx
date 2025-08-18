@@ -47,7 +47,7 @@ export default function HeroContainer({
           <HeroDescription />
           <BackgroundGlow />
           <div className="mb-10 animate-fade-in-up flex flex-col mx-auto justify-start h-full text-center pt-[30px] sm:pt-[65px]">
-            <div className="flex flex-row justify-center items-center gap-4 uppercase">
+            <div className="flex flex-row justify-center items-center gap-4 uppercase mb-[20px]">
               <span className="text-[12px]">early access</span>
               <div className="flex flex-row gap-2 items-center">
                 {Array.from({ length: 3 }).map((_, i) => (
@@ -62,7 +62,7 @@ export default function HeroContainer({
 
             <ScrambledText>
               <h4
-                className="text-[32px] md:text-6xl font-[var(--font-anonymous-pro)] mt-[20px] leading-6  mb-6 max-w-[600px] line-clamp-2"
+                className="text-[32px] md:text-6xl font-[var(--font-anonymous-pro)]  leading-[0.8]  max-w-[600px] line-clamp-2"
                 style={{
                   color: "rgba(228 228 228 / 100%)",
                 }}
@@ -70,7 +70,7 @@ export default function HeroContainer({
                 Your Gateway to Funded Trading
               </h4>
             </ScrambledText>
-            <div className="flex flex-row justify-center items-center gap-[15px]   h-[40px] z-1000000">
+            <div className="flex flex-row justify-center items-center gap-[15px]   h-[40px] z-1000000 mt-6">
               <PixelTrailWithOverlay
                 width={130}
                 height={36}
@@ -107,7 +107,7 @@ export default function HeroContainer({
             position={{ x: isMobile ? 1 : 8, y: isMobile ? 5 : 5, z: 1 }}
             rotation={{ x: 0.6, y: 0.1, z: -0.4 }}
             pivotRotation={{ x: -0.05, y: 0, z: 0 }}
-            rotationSpeed={0.01}
+            rotationSpeed={0.004}
             cellSize={5.0}
             onReady={() => console.log("Fully configured scene ready!")}
           />

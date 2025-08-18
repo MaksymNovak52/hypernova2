@@ -29,7 +29,7 @@ class AsciiScene {
       position: { x: 6, y: 2, z: 0 },
       rotation: { x: 0.45, y: 0, z: -0.5 },
       pivotRotation: { x: -0.05, y: 0, z: 0 },
-      rotationSpeed: 0.003,
+      rotationSpeed: 0,
     };
 
     this.options = { ...defaults, ...options };

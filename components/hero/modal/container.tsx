@@ -202,7 +202,7 @@ export default function ModalContainer({
                     brand="Hyperliquid"
                     isDimmed={false}
                     responsiveClassName="s"
-                    containerClassName="  z-999999 fixed top-[10px] left-[391px] bg-transparent "
+                    containerClassName="  z-999999 fixed top-[3px] left-[400px] bg-transparent "
                     labelClassName="text-[10px] text-[#BBBBBA]"
                     brandClassName="text-[10px]  text-white"
                     iconClassName="mx-1 text-white/60"
