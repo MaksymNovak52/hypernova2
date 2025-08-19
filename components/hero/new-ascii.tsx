@@ -99,34 +99,7 @@ export function AsciiCanvas({
       }
       sceneRef.current = null;
     };
-  }, [
-    containerId,
-    className,
-    scale,
-    memoizedPosition,
-    memoizedRotation,
-    memoizedPivotRotation,
-    rotationSpeed,
-    usePortal,
-    memoizedCallback,
-  ]);
-
-  useEffect(() => {
-    if (sceneRef.current) {
-      if (sceneRef.current.updatePosition && memoizedPosition) {
-        sceneRef.current.updatePosition(memoizedPosition);
-      }
-      if (sceneRef.current.updateRotation && memoizedRotation) {
-        sceneRef.current.updateRotation(memoizedRotation);
-      }
-      if (sceneRef.current.updatePivotRotation && memoizedPivotRotation) {
-        sceneRef.current.updatePivotRotation(memoizedPivotRotation);
-      }
-      if (sceneRef.current.updateScale && scale) {
-        sceneRef.current.updateScale(scale);
-      }
-    }
-  }, [memoizedPosition, memoizedRotation, memoizedPivotRotation, scale]);
+  }, []);
 
   if (usePortal) {
     return null;
