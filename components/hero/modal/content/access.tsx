@@ -46,7 +46,7 @@ export const AccessStep: React.FC<AccessStepProps> = ({
               if (e.key === "Escape") onCancel();
             }}
             className="  text-[16px] sm:text-sm h-[16px] w-[95%] bg-transparent text-[#BBBBBA] outline-none"
-            placeholder="Enter value"
+            placeholder="Enter Address"
           />
           {value.length > 0 ? (
             <span onClick={onCommit} className="cursor-target">
