@@ -2,7 +2,7 @@ import { BuiltOnBadge } from "@/components/ui";
 import { FORM_CONFIG, MODAL_CONFIG } from "@/constanst";
 import { useFormValidation, useIsMobile } from "@/hooks";
 import { FormState, ModalContainerProps } from "@/interface";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { AsciiCanvas } from "../new-ascii";
 import { EmailContent, PriorityAccess, UserContainer } from "./content";
 import { Footer, ModalHeader } from "./index";
@@ -18,6 +18,9 @@ export default function ModalContainer({
     isFocused: false,
     step: "email",
   });
+  const [windowWidth, setWindowWidth] = useState(
+    typeof window !== "undefined" ? window.innerWidth : 1024
+  );
 
   const { validateEmail, validateUsername } = useFormValidation();
   const isPhone = useIsMobile(800);
@@ -107,6 +110,28 @@ export default function ModalContainer({
     setFormState((prev) => ({ ...prev, isFocused: false }));
 
   if (!isOpen) return null;
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Calculate responsive x position
+  const getResponsiveXPosition = useMemo(() => {
+    const baseX = -59;
+
+    if (windowWidth <= 794) {
+      const widthDifference = 794 - windowWidth;
+      const adjustmentSteps = Math.floor(widthDifference / 100);
+      return baseX - adjustmentSteps * 10;
+    }
+
+    return baseX;
+  }, [windowWidth]);
 
   const renderStepContent = () => {
     switch (formState.step) {
@@ -208,10 +233,10 @@ export default function ModalContainer({
                     iconClassName="mx-1 text-white/60"
                   />
                   <AsciiCanvas
-                    className="rotate-[1 40deg] !top-[8 0px] !-left-[50 px] "
+                    className=""
                     scale={22}
-                    position={{ x: -59, y: -11, z: -21 }}
-                    rotation={{ x: -3.5, y: -0.1, z: 3 }}
+                    position={{ x: 3, y: -11, z: -10 }}
+                    rotation={{ x: -3.6, y: 0.8, z: 3 }}
                     pivotRotation={{ x: -0.05, y: 0, z: 1 }}
                     rotationSpeed={0}
                     cellSize={3.2}

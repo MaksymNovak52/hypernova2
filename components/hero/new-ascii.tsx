@@ -26,9 +26,7 @@ export function AsciiCanvas({
   usePortal = false,
 }: Props) {
   const reactId = useId().replace(/[:]/g, "");
-
   const containerId = `ascii-${reactId}`;
-
   const sceneRef = useRef<AsciiScene | null>(null);
   const portalContainerRef = useRef<HTMLDivElement | null>(null);
 
@@ -37,7 +35,10 @@ export function AsciiCanvas({
     [position?.x, position?.y, position?.z]
   );
 
-  const memoizedRotation = rotation;
+  const memoizedRotation = useMemo(
+    () => rotation,
+    [rotation?.x, rotation?.y, rotation?.z]
+  );
 
   const memoizedPivotRotation = useMemo(
     () => pivotRotation,
@@ -93,9 +94,39 @@ export function AsciiCanvas({
         portalContainerRef.current = null;
       }
 
+      if (sceneRef.current && sceneRef.current.destroy) {
+        sceneRef.current.destroy();
+      }
       sceneRef.current = null;
     };
-  }, []);
+  }, [
+    containerId,
+    className,
+    scale,
+    memoizedPosition,
+    memoizedRotation,
+    memoizedPivotRotation,
+    rotationSpeed,
+    usePortal,
+    memoizedCallback,
+  ]);
+
+  useEffect(() => {
+    if (sceneRef.current) {
+      if (sceneRef.current.updatePosition && memoizedPosition) {
+        sceneRef.current.updatePosition(memoizedPosition);
+      }
+      if (sceneRef.current.updateRotation && memoizedRotation) {
+        sceneRef.current.updateRotation(memoizedRotation);
+      }
+      if (sceneRef.current.updatePivotRotation && memoizedPivotRotation) {
+        sceneRef.current.updatePivotRotation(memoizedPivotRotation);
+      }
+      if (sceneRef.current.updateScale && scale) {
+        sceneRef.current.updateScale(scale);
+      }
+    }
+  }, [memoizedPosition, memoizedRotation, memoizedPivotRotation, scale]);
 
   if (usePortal) {
     return null;

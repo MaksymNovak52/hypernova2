@@ -8,15 +8,6 @@ const ASCII_ATLAS_IMG = "/16X18ASCII.png";
 const MODEL_GLB = "/hypernova_0005.glb";
 
 class AsciiScene {
-  setScale(scale) {
-    throw new Error("Method not implemented.");
-  }
-  setRotation(rotation) {
-    throw new Error("Method not implemented.");
-  }
-  setPosition(position) {
-    throw new Error("Method not implemented.");
-  }
   constructor(containerId, options = {}) {
     this.container = document.getElementById(containerId);
     this.CHAR_COUNT = 16;
@@ -47,22 +38,13 @@ class AsciiScene {
     }
 
     this.onLoadCallBack = this.options.callback;
-
     this.performanceSettings = this._getPerformanceSettings();
+
+    this.resizeObserver = null;
   }
 
   _detectMobile() {
     return false;
-
-    /**
-     * 
-     * (
-      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-        navigator.userAgent
-      ) ||
-      (navigator.maxTouchPoints > 0 && window.innerWidth <= 1024)
-    );
-     */
   }
 
   _getPerformanceSettings() {
@@ -76,13 +58,24 @@ class AsciiScene {
     };
   }
 
+  _getContainerSize() {
+    if (!this.container) return { width: 800, height: 600 };
+    const rect = this.container.getBoundingClientRect();
+    return {
+      width: rect.width || 800,
+      height: rect.height || 600,
+    };
+  }
+
   _initScene() {
     this.scene = new THREE.Scene();
     this.scene.background = null;
 
+    const size = this._getContainerSize();
+
     this.camera = new THREE.PerspectiveCamera(
       70,
-      window.innerWidth / window.innerHeight,
+      size.width / size.height,
       0.1,
       1000
     );
@@ -94,11 +87,11 @@ class AsciiScene {
       alpha: true,
     });
     this.renderer.setPixelRatio(this.performanceSettings.pixelRatio);
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
     this.renderer.setClearColor(0x000000, 0);
     this.container.appendChild(this.renderer.domElement);
 
+    this.renderer.setSize(size.width, size.height);
     this.pivot = new THREE.Object3D();
     this.containerGroup = new THREE.Group();
     this.scene.add(this.containerGroup);
@@ -192,6 +185,8 @@ class AsciiScene {
   }
 
   _getAsciiShader(fontTexture) {
+    const size = this._getContainerSize();
+
     const blurCode = `
       vec3 blurRGB = vec3(0.0);
       float blurSize = 20.0 / resolution.x;
@@ -213,7 +208,7 @@ class AsciiScene {
         tDiffuse: { value: null },
         fontTexture: { value: fontTexture },
         resolution: {
-          value: new THREE.Vector2(window.innerWidth, window.innerHeight),
+          value: new THREE.Vector2(size.width, size.height),
         },
         mouse: { value: new THREE.Vector2(-10000, -10000) },
         cellSize: { value: this.performanceSettings.cellSize },
@@ -343,10 +338,15 @@ class AsciiScene {
 
   _bindEvents() {
     const mouseMoveHandler = (e) => {
-      if (!this.asciiPass) return;
+      if (!this.asciiPass || !this.container) return;
+
+      const rect = this.container.getBoundingClientRect();
+      const containerX = e.clientX - rect.left;
+      const containerY = e.clientY - rect.top;
+
       this.asciiPass.uniforms.mouse.value.set(
-        e.clientX,
-        window.innerHeight - e.clientY + 100
+        containerX,
+        rect.height - containerY + 100
       );
     };
 
@@ -371,15 +371,32 @@ class AsciiScene {
       window.addEventListener("mousemove", mouseMoveHandler);
     }
 
+    if (this.container && window.ResizeObserver) {
+      this.resizeObserver = new ResizeObserver((entries) => {
+        for (let entry of entries) {
+          const { width, height } = entry.contentRect;
+          this._handleResize(width, height);
+        }
+      });
+      this.resizeObserver.observe(this.container);
+    }
+
     window.addEventListener("resize", () => {
-      const w = window.innerWidth;
-      const h = window.innerHeight;
-      this.renderer.setSize(w, h);
-      this.composer.setSize(w, h);
-      this.camera.aspect = w / h;
-      this.camera.updateProjectionMatrix();
-      if (this.asciiPass) this.asciiPass.uniforms.resolution.value.set(w, h);
+      const size = this._getContainerSize();
+      this._handleResize(size.width, size.height);
     });
+  }
+
+  _handleResize(width, height) {
+    if (!width || !height) return;
+
+    this.renderer.setSize(width, height);
+    this.composer.setSize(width, height);
+    this.camera.aspect = width / height;
+    this.camera.updateProjectionMatrix();
+    if (this.asciiPass) {
+      this.asciiPass.uniforms.resolution.value.set(width, height);
+    }
   }
 
   _animate(time = 0) {
@@ -398,18 +415,46 @@ class AsciiScene {
     this.options.scale = scale;
   }
 
-  updatePosition(x, y, z) {
-    if (this.containerGroup) {
-      this.containerGroup.position.set(x, y, z);
+  updatePosition(position) {
+    if (this.containerGroup && position) {
+      this.containerGroup.position.set(
+        position.x ?? this.containerGroup.position.x,
+        position.y ?? this.containerGroup.position.y,
+        position.z ?? this.containerGroup.position.z
+      );
     }
-    this.options.position = { x, y, z };
+    if (position) {
+      this.options.position = { ...this.options.position, ...position };
+    }
   }
 
-  updateRotation(x, y, z) {
-    if (this.containerGroup) {
-      this.containerGroup.rotation.set(x, y, z);
+  updateRotation(rotation) {
+    if (this.containerGroup && rotation) {
+      this.containerGroup.rotation.set(
+        rotation.x ?? this.containerGroup.rotation.x,
+        rotation.y ?? this.containerGroup.rotation.y,
+        rotation.z ?? this.containerGroup.rotation.z
+      );
     }
-    this.options.rotation = { x, y, z };
+    if (rotation) {
+      this.options.rotation = { ...this.options.rotation, ...rotation };
+    }
+  }
+
+  updatePivotRotation(pivotRotation) {
+    if (this.pivot && pivotRotation) {
+      this.pivot.rotation.set(
+        pivotRotation.x ?? this.pivot.rotation.x,
+        pivotRotation.y ?? this.pivot.rotation.y,
+        pivotRotation.z ?? this.pivot.rotation.z
+      );
+    }
+    if (pivotRotation) {
+      this.options.pivotRotation = {
+        ...this.options.pivotRotation,
+        ...pivotRotation,
+      };
+    }
   }
 
   updateRotationSpeed(speed) {
@@ -425,12 +470,25 @@ class AsciiScene {
     };
   }
 
+  destroy() {
+    if (this.resizeObserver) {
+      this.resizeObserver.disconnect();
+    }
+
+    if (this.renderer) {
+      this.renderer.dispose();
+    }
+
+    if (this.composer) {
+      this.composer.dispose();
+    }
+  }
+
   init() {
     this._initScene();
     this._initLights();
     this._initModel();
     this._initPostProcessing();
-
     this._bindEvents();
     this._animate();
   }
